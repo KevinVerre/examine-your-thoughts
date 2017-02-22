@@ -1,0 +1,349 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<title>Examining your thoughts</title>
+
+<script>
+console.log("Script begins");
+
+// Code and text Copyright Kevin Verre
+
+// Inspired by the ideas of Byron Katie, author of "Loving What Is"
+
+// Array of steps. Each step contains a question for the user
+// Each step also contains how to handle the user's response
+var steps =
+[
+	{
+		"id": "welcome",
+		"prompt": "Welcome! I will ask you a series of questions.",
+		"hint": "These questions are designed to help you worry less about your life. <br/>Please submit anything to continue. (Press Enter or Click Button to submit)",
+		"response": "",
+		"response_handler": "",
+		"result_tag": ""
+	},
+	{
+		"id": "noun",
+		"prompt": "What is the noun (person, thing, or event) that is causing you stress?",
+		"hint": "Examples: 'My boss', 'My roommate', 'My girlfriend', 'My project', 'My chore', 'My future', 'My career'",
+		"response": "",
+		"response_handler": "save_noun_response",
+		"result_tag": "Thing bothering you"
+	},
+	{
+		"id": "feel",
+		"prompt": "How do you FEEL when you think about whatever is troubling you? How does '#{NOUN}' make you feel? ",
+		"hint": "Examples: Intimidated, frustrated, angry, scared",
+		"response": "",
+		"response_handler": "save_feeling_response",
+		"result_tag": "Feeling"
+	},
+	{
+		"id": "thought",
+		"prompt": "Write a thought about '#{NOUN}' and how you feel about it. ('#{FEELING}')",
+		"hint": "Examples: My work is intimidating, My girlfriend is frustrating, Doing laundry is boring, My future is horrible, Learning that skill is too hard",
+		"response": "",
+		"response_handler": "save_thought_response",
+		"result_tag": "Stressful thought"
+	},
+	{
+		"id": "true",
+		"prompt": "'#{THOUGHT}' ...Is it true?",
+		"hint": "Be honest! It's OK to say Yes if you feel it is true to you right now. It doesn't matter if you say Yes or No.",
+		"response": "",
+		"response_handler": "",
+		"result_tag": ""
+	},
+	{
+		"id": "absolutely",
+		"prompt": "'#{THOUGHT}' ...Can you absolutely be sure it is true?",
+		"hint": "Again, say Yes if it is true to you right now.",
+		"response": "",
+		"response_handler": "",
+		"result_tag": ""
+	},
+	{
+		"id": "react",
+		"prompt": "How do you react when you think or believe '#{THOUGHT}'?",
+		"hint": "Examples: I get scared, I procrastinate, I avoid",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Reaction"
+	},
+	{
+		"id": "treat",
+		"prompt": "How do you treat '#{NOUN}' when you think '#{THOUGHT}'?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Behavior"
+	},
+	{
+		"id": "without",
+		"prompt": "Who would you be without the thought '#{THOUGHT}'? How would you react?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Without"
+	},
+	{
+		"id": "envision",
+		"prompt": "What do you see, envision, or imagine when you believe '#{THOUGHT}'?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Envision"
+	},
+	{
+		"id": "envision_without",
+		"prompt": "What do you imagine it would be like if you could let go of the thought '#{THOUGHT}'?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Envision without"
+	},
+	{
+		"id": "drop",
+		"prompt": "Can you see a reason to drop the thought '#{THOUGHT}'?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Can I see a reason to drop the thought"
+	},
+	{
+		"id": "turnaround",
+		"prompt": "What are some of the turnarounds?",
+		"hint": "A turn around is where you rephrase the thought toward yourself or towards the opposite",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Turnarounds"
+	},
+	/*{
+		"id": "false",
+		"prompt": "What are THREE REASONS why '#{THOUGHT}' is false?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Arguments against the thought"
+	}, 
+	{
+		"id": "myself",
+		"prompt": "What are THREE WAYS in which I am somehow causing the feeling '#{FEELING}' to occur? Or how do your thoughts cause you to feel that way?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Turn around towards self"
+	}, */
+	{
+		"id": "advice",
+		"prompt": "What advice would you give yourself regarding '#{NOUN}'?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Advice for myself"
+	}, 
+	{
+		"id": "now",
+		"prompt": "How do you feel now?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Feeling now"
+	},
+	{
+		"id": "end",
+		"prompt": "The End",
+		"hint": "Hope this thinking exercise helped you feel better. ",
+		"response":"",
+		"response_handler": "",
+		"result_tag": ""
+	}
+];
+
+// The most important user response's are saved here
+var response = {
+	"noun": "",
+	"feeling": "",
+	"thought": ""
+};
+
+function prep_string(string_in){
+	// Only replaces the first occurance in the string
+
+	// if the string has #{THOUGHT} replace it with the user's thought
+	string_out = string_in.replace("#{THOUGHT}", response.thought);
+	// if the string has #{FEELING} replace it with the user's feeling
+	string_out = string_out.replace("#{FEELING}", response.feeling);
+
+	// if the string has #{NOUN} replace it with the user's noun
+	string_out = string_out.replace("#{NOUN}", response.noun);
+
+	return string_out;
+}
+
+function save_noun_response(){
+	user_response = $('#response_textarea').val().trim();
+	//remove punctuation
+	user_response = user_response.replace(/[\.!]$/,'')
+	response.noun = user_response;
+}
+function save_feeling_response(){
+	user_response = $('#response_textarea').val().trim();
+	user_response = user_response.replace(/[\.!]$/,'')
+
+	response.feeling = user_response;
+	
+}
+function save_thought_response(){
+	user_response = $('#response_textarea').val().trim();
+	user_response = user_response.replace(/[\.!]$/,'')
+
+	response.thought = user_response;
+}
+
+function display_step(step, current_step_number){
+	// display an empty input
+	$('#response_textarea').val('').select();
+	// display the prompt
+	prepped_prompt = prep_string(step.prompt);
+	$('#prompt_text').text(prepped_prompt);
+	// display the hint
+	prepped_hint = prep_string(step.hint);
+	$('#hint_text').html(prepped_hint);
+	//update question number
+	number_str = ""+(current_step_number+1)+"/"+total_number_steps;
+	$('#question_number_holder').html(number_str);
+
+}
+
+function print_step_results(step, step_number){
+	result_string = "";
+	// print the step number
+	result_string += "" + step_number + ")";
+	// print the step prompt
+	prepped_prompt = prep_string(step.prompt);
+	result_string += prepped_prompt;
+	// print the step's hint
+	// print the step's response
+
+	console.log(result_string);
+	console.log(step.response);
+}
+
+// main, run the program
+
+// Go through all of the steps
+var current_step_number = 0;
+var total_number_steps = steps.length;
+
+function display_first_question(){
+	$('#response_textarea').on('keyup', enter_keyup_handler);
+
+	var current_step_number = 0;
+	first_step = steps[0];
+	display_step(first_step, 0);
+
+}
+
+function print_all_results(){
+	var x = 0;
+	while (x < total_number_steps){
+		print_step_results(steps[x],x);
+		x++;
+	}
+}
+
+function cleanup(){
+	// hide the submit button
+	$('#submit_button').hide();
+	// hide the input textarea
+	$('#response_textarea').hide();
+}
+
+function restart(){
+	location.reload();
+}
+
+function enter_keyup_handler(e){
+	// when enter is pressed in text area we should submit the form
+	if (e.keyCode == 13){
+		submit_response_handler();
+	}
+}
+
+function submit_response_handler(){
+	// Save the user's response
+	cur_step = steps[current_step_number];
+	user_response = $('#response_textarea').val().trim();
+	cur_step.response = user_response;
+
+	// execute that step's unique response handler
+	if (cur_step.response_handler != ""){
+		name_of_function = cur_step.response_handler;
+		window[name_of_function]();
+	}
+
+	// Print results so far to screen
+	if (cur_step.result_tag != "") {
+		result_string = "<dt class=\"text-right\">" + cur_step.result_tag + "</dt><dd class=\"text-left\">" + user_response + "</dd>";
+		var results_area = $('#results_area');
+		results_area.append(result_string)
+	}
+
+	// Go to the next step
+	current_step_number += 1;
+
+	next_step = steps[current_step_number];
+	display_step(next_step, current_step_number);
+
+	// Check to see if we are done
+	if (current_step_number == total_number_steps){
+		print_all_results();
+		console.log('The end!');
+		cleanup();
+		return;
+	}
+}
+
+</script>
+</head>
+<body onload="display_first_question();">
+
+<div class="jumbotron" style="background-color: #ffe0e5;">
+	<div class="container">
+		<div class="row">
+			<div>
+				<div id="prompt_text" class="text-left h2">Hello!</div>
+			</div>
+		</div>
+		<div class="row">
+			<div id="hint_text" class="text-left h4">Here's a hint: You're doing great!</div>
+		</div>
+		<div class="row">
+			<textarea id="response_textarea" style="width:50%;"></textarea>
+		</div>
+		<div class="row">
+			<input id="submit_button" type="button" value="Submit response" onclick="submit_response_handler();" class="btn btn-primary"/>
+			<div id ="question_number_holder">1/14</div>
+		</div>
+		<div class="row">
+			<dl id="results_area" class="dl-horizontal"></dl>
+		</div>
+	</div>
+</div>
+<hr/>
+<div class="container">
+	<div class="row"><input type="button" value="Restart" onclick="restart();" class="btn btn-danger btn-small"/></div>
+	<div class="row"><div class="text-small small"><em>Your answers are private and are not saved anywhere</em></div></div>
+	<div class="row"><div class="text-small small"><em>Questions inspired by the "Love Your Neighbor" worksheet by Byron Katie</em></div></div>
+</div>
+
+</body>
+</html>
+
+
+
+
