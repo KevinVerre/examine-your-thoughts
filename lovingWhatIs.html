@@ -22,7 +22,7 @@ var steps =
 		"prompt": "Welcome! I will ask you a series of questions.",
 		"hint": "These questions are designed to help you worry less about your life. <br/>Please submit anything to continue. (Press Enter or Click Button to submit)",
 		"response": "",
-		"response_handler": "",
+		"response_handler": "handle_initial_response",
 		"result_tag": ""
 	},
 	{
@@ -36,7 +36,7 @@ var steps =
 	{
 		"id": "feel",
 		"prompt": "How do you FEEL when you think about whatever is troubling you? How does '#{NOUN}' make you feel? ",
-		"hint": "Examples: Intimidated, frustrated, angry, scared",
+		"hint": "Examples: Intimidated, frustrated, angry, scared, unmotivated, uninterested",
 		"response": "",
 		"response_handler": "save_feeling_response",
 		"result_tag": "Feeling"
@@ -60,7 +60,7 @@ var steps =
 	{
 		"id": "absolutely",
 		"prompt": "'#{THOUGHT}' ...Can you absolutely be sure it is true?",
-		"hint": "Again, say Yes if it is true to you right now.",
+		"hint": "Again, say Yes if it is true right now.",
 		"response": "",
 		"response_handler": "",
 		"result_tag": ""
@@ -68,18 +68,10 @@ var steps =
 	{
 		"id": "react",
 		"prompt": "How do you react when you think or believe '#{THOUGHT}'?",
-		"hint": "Examples: I get scared, I procrastinate, I avoid",
+		"hint": "Examples: I get scared, I procrastinate, I avoid having to deal with it",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Reaction"
-	},
-	{
-		"id": "treat",
-		"prompt": "How do you treat '#{NOUN}' when you think '#{THOUGHT}'?",
-		"hint": "",
-		"response": "",
-		"response_handler": "",
-		"result_tag": "Behavior"
 	},
 	{
 		"id": "without",
@@ -88,6 +80,14 @@ var steps =
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Without"
+	},
+		{
+		"id": "treat",
+		"prompt": "How do you treat '#{NOUN}' when you think '#{THOUGHT}'?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Behavior"
 	},
 	{
 		"id": "envision",
@@ -99,7 +99,7 @@ var steps =
 	},
 	{
 		"id": "envision_without",
-		"prompt": "What do you imagine it would be like if you could let go of the thought '#{THOUGHT}'?",
+		"prompt": "What do you see or imagine it would be like if you could let go of the thought '#{THOUGHT}'?",
 		"hint": "",
 		"response": "",
 		"response_handler": "",
@@ -115,8 +115,8 @@ var steps =
 	},
 	{
 		"id": "turnaround",
-		"prompt": "What are some of the turnarounds?",
-		"hint": "A turn around is where you rephrase the thought toward yourself or towards the opposite",
+		"prompt": "What are some of the turnarounds? (for '#{THOUGHT}')",
+		"hint": "A turn around is where you rephrase the thought toward yourself or towards the opposite in a way that you believe is more true",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Turnarounds"
@@ -204,6 +204,11 @@ function save_thought_response(){
 	response.thought = user_response;
 }
 
+function handle_initial_response(){
+	$('#response_textarea').show();
+	$('#response_textarea').on('keyup', enter_keyup_handler);
+}
+
 function display_step(step, current_step_number){
 	// display an empty input
 	$('#response_textarea').val('').select();
@@ -240,11 +245,13 @@ var current_step_number = 0;
 var total_number_steps = steps.length;
 
 function display_first_question(){
-	$('#response_textarea').on('keyup', enter_keyup_handler);
+	$('#response_textarea').hide(); // attach Enter key handler and hide, it starts out hidden
 
 	var current_step_number = 0;
 	first_step = steps[0];
 	display_step(first_step, 0);
+	//$('#submit_button').select();
+
 
 }
 
@@ -326,7 +333,7 @@ function submit_response_handler(){
 			<textarea id="response_textarea" style="width:50%;"></textarea>
 		</div>
 		<div class="row">
-			<input id="submit_button" type="button" value="Submit response" onclick="submit_response_handler();" class="btn btn-primary"/>
+			<input id="submit_button" type="button" value="Next/Submit response" onclick="submit_response_handler();" class="btn btn-primary"/>
 			<div id ="question_number_holder">1/14</div>
 		</div>
 		<div class="row">
@@ -337,12 +344,18 @@ function submit_response_handler(){
 <hr/>
 <div class="container">
 	<div class="row"><input type="button" value="Restart" onclick="restart();" class="btn btn-danger btn-small"/></div>
-	<div class="row"><div class="text-small small"><em>Your answers are private and are not saved anywhere</em></div></div>
-	<div class="row"><div class="text-small small"><em>Questions inspired by the "Love Your Neighbor" worksheet by Byron Katie</em></div></div>
+	<div class="row"><div class="text-small small"><em>Your answers are private and are not saved anywhere.</em></div></div>
+	<div class="row"><div class="text-small small"><em>Website code by Kevin Verre.</em></div></div>
+	<div class="row"><div class="text-small small"><em>
+		Questions inspired by book "Loving What Is" and the "Love Your Neighbor" worksheet by Byron Katie. (<a href="thework.com">thework.com</a>)</em></div>
+	</div>
+<!-- 	<div class="row text-small small"><a href="thework.com">Link to Byron Katie's worksheet</a></div>
+ -->
 </div>
 
 </body>
 </html>
+
 
 
 
