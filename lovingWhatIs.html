@@ -13,7 +13,7 @@ console.log("Script begins");
 
 // Inspired by the ideas of Byron Katie, author of "Loving What Is"
 
-// Array of steps. Each step contains a question for the user
+// Array of steps. Each step co`ntains a question for the user
 // Each step also contains how to handle the user's response
 var steps =
 [
@@ -36,7 +36,7 @@ var steps =
 	{
 		"id": "feel",
 		"prompt": "How do you FEEL when you think about whatever is troubling you? How does '#{NOUN}' make you feel? ",
-		"hint": "Examples: Intimidated, frustrated, angry, scared, unmotivated, uninterested",
+		"hint": "Examples: Hopeless, intimidated, frustrated, angry, scared, unmotivated, uninterested",
 		"response": "",
 		"response_handler": "save_feeling_response",
 		"result_tag": "Feeling"
@@ -68,7 +68,7 @@ var steps =
 	{
 		"id": "react",
 		"prompt": "How do you react when you think or believe '#{THOUGHT}'?",
-		"hint": "Examples: I get scared, I procrastinate, I avoid having to deal with it",
+		"hint": "Examples: I get scared, I procrastinate, I avoid dealing with it or thinking about it",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Reaction"
@@ -186,12 +186,18 @@ function prep_string(string_in){
 
 function save_noun_response(){
 	user_response = $('#response_textarea').val().trim();
+	if (user_response == ''){
+		user_response = '#NOUN';
+	}
 	//remove punctuation
 	user_response = user_response.replace(/[\.!]$/,'')
 	response.noun = user_response;
 }
 function save_feeling_response(){
 	user_response = $('#response_textarea').val().trim();
+	if (user_response == ''){
+		user_response = '#FEELING';
+	}
 	user_response = user_response.replace(/[\.!]$/,'')
 
 	response.feeling = user_response;
@@ -199,6 +205,9 @@ function save_feeling_response(){
 }
 function save_thought_response(){
 	user_response = $('#response_textarea').val().trim();
+	if (user_response == ''){
+		user_response = '#THOUGHT';
+	}
 	user_response = user_response.replace(/[\.!]$/,'')
 
 	response.thought = user_response;
@@ -206,12 +215,14 @@ function save_thought_response(){
 
 function handle_initial_response(){
 	$('#response_textarea').show();
-	$('#response_textarea').on('keyup', enter_keyup_handler);
 }
+
+
+next_question_flag = false;
 
 function display_step(step, current_step_number){
 	// display an empty input
-	$('#response_textarea').val('').select();
+	$('#response_textarea').val('').focus();
 	// display the prompt
 	prepped_prompt = prep_string(step.prompt);
 	$('#prompt_text').text(prepped_prompt);
@@ -224,7 +235,9 @@ function display_step(step, current_step_number){
 
 }
 
+// debug function
 function print_step_results(step, step_number){
+
 	result_string = "";
 	// print the step number
 	result_string += "" + step_number + ")";
@@ -244,18 +257,27 @@ function print_step_results(step, step_number){
 var current_step_number = 0;
 var total_number_steps = steps.length;
 
+// INITIALIZE function
 function display_first_question(){
 	$('#response_textarea').hide(); // attach Enter key handler and hide, it starts out hidden
 
 	var current_step_number = 0;
 	first_step = steps[0];
 	display_step(first_step, 0);
-	//$('#submit_button').select();
+	$('#submit_button').focus();
+	$('#response_textarea').on('keypress', enter_key_handler);
+	$('#response_textarea').on('keyup', textarea_keyup);
 
+
+	//$('#submit_button').on('click', test_submit_button_click_handler);
 
 }
 
-function print_all_results(){
+function release_next_question_flag(){
+	next_question_flag = false;
+}
+
+function print_all_results(){ // debug function
 	var x = 0;
 	while (x < total_number_steps){
 		print_step_results(steps[x],x);
@@ -274,14 +296,36 @@ function restart(){
 	location.reload();
 }
 
-function enter_keyup_handler(e){
-	// when enter is pressed in text area we should submit the form
+function textarea_keyup(e){
 	if (e.keyCode == 13){
-		submit_response_handler();
+		release_next_question_flag();
 	}
 }
 
+function enter_key_handler(e){
+	// when enter is pressed in text area we should submit the form
+	if (e.keyCode == 13){
+		//make sure Shift key is not also pressed
+		if (e.shiftKey){
+			return;
+		}
+
+		e.preventDefault();
+		e.stopPropagation();
+		console.log("Enter pressed");
+		submit_response_handler();
+		return false;
+	}
+}
+
+// a.k.a. Next question function 
 function submit_response_handler(){
+	if (next_question_flag) {
+		// do nothing. We can't go to the next question yet
+		return;
+	}
+	next_question_flag = true;
+
 	// Save the user's response
 	cur_step = steps[current_step_number];
 	user_response = $('#response_textarea').val().trim();
@@ -295,7 +339,7 @@ function submit_response_handler(){
 
 	// Print results so far to screen
 	if (cur_step.result_tag != "") {
-		result_string = "<dt class=\"text-right\">" + cur_step.result_tag + "</dt><dd class=\"text-left\">" + user_response + "</dd>";
+		result_string = "<dt class=\"text-right\">" + cur_step.result_tag + ":</dt><dd class=\"text-left\">" + user_response + "</dd>";
 		var results_area = $('#results_area');
 		results_area.append(result_string)
 	}
@@ -313,6 +357,19 @@ function submit_response_handler(){
 		cleanup();
 		return;
 	}
+}
+
+function test_submit_button_click_handler(e)
+{
+	console.log("test_submit_button_click_handler function entered");
+	submit_response_handler();
+}
+
+function submit_button_click_handler(e)
+{
+	console.log("submit_button_click_handler function entered");
+	submit_response_handler();
+	release_next_question_flag();
 }
 
 </script>
@@ -333,7 +390,7 @@ function submit_response_handler(){
 			<textarea id="response_textarea" style="width:50%;"></textarea>
 		</div>
 		<div class="row">
-			<input id="submit_button" type="button" value="Next/Submit response" onclick="submit_response_handler();" class="btn btn-primary"/>
+			<input id="submit_button" type="button" value="Next/Submit response" onclick="submit_button_click_handler();" class="btn btn-primary"/>
 			<div id ="question_number_holder">1/14</div>
 		</div>
 		<div class="row">
