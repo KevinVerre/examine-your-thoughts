@@ -55,7 +55,7 @@ var steps =
 		"hint": "Be honest! It's OK to say Yes if you feel it is true to you right now. It doesn't matter if you say Yes or No.",
 		"response": "",
 		"response_handler": "",
-		"result_tag": ""
+		"result_tag": "True"
 	},
 	{
 		"id": "absolutely",
@@ -63,7 +63,7 @@ var steps =
 		"hint": "Again, say Yes if it is true right now.",
 		"response": "",
 		"response_handler": "",
-		"result_tag": ""
+		"result_tag": "Absolutely true"
 	},
 	{
 		"id": "react",
@@ -192,6 +192,7 @@ function save_noun_response(){
 	//remove punctuation
 	user_response = user_response.replace(/[\.!]$/,'')
 	response.noun = user_response;
+	steps[current_step_number].response = user_response;
 }
 function save_feeling_response(){
 	user_response = $('#response_textarea').val().trim();
@@ -201,7 +202,7 @@ function save_feeling_response(){
 	user_response = user_response.replace(/[\.!]$/,'')
 
 	response.feeling = user_response;
-	
+	steps[current_step_number].response = user_response;
 }
 function save_thought_response(){
 	user_response = $('#response_textarea').val().trim();
@@ -211,6 +212,7 @@ function save_thought_response(){
 	user_response = user_response.replace(/[\.!]$/,'')
 
 	response.thought = user_response;
+	steps[current_step_number].response = user_response;
 }
 
 function handle_initial_response(){
@@ -233,6 +235,23 @@ function display_step(step, current_step_number){
 	number_str = ""+(current_step_number+1)+"/"+total_number_steps;
 	$('#question_number_holder').html(number_str);
 
+	// Print results so far to screen
+	var results_area = $('#results_area');
+	results_area.html('');
+
+	for (var i = 0; i <= current_step_number; i++){
+		temp_step = steps[i];
+		if (temp_step.result_tag != "") {
+			result_string = "<dt class=\"text-right\">" + temp_step.result_tag + ":</dt><dd class=\"text-left\">" + temp_step.response + "</dd>";
+			results_area.append(result_string)
+		}
+	}
+
+	if (current_step_number == 0) {
+		$('#responses_headline').hide();
+	} else {
+		$('#responses_headline').show();
+	}
 }
 
 // debug function
@@ -312,7 +331,6 @@ function enter_key_handler(e){
 
 		e.preventDefault();
 		e.stopPropagation();
-		console.log("Enter pressed");
 		submit_response_handler();
 		return false;
 	}
@@ -335,13 +353,6 @@ function submit_response_handler(){
 	if (cur_step.response_handler != ""){
 		name_of_function = cur_step.response_handler;
 		window[name_of_function]();
-	}
-
-	// Print results so far to screen
-	if (cur_step.result_tag != "") {
-		result_string = "<dt class=\"text-right\">" + cur_step.result_tag + ":</dt><dd class=\"text-left\">" + user_response + "</dd>";
-		var results_area = $('#results_area');
-		results_area.append(result_string)
 	}
 
 	// Go to the next step
@@ -372,6 +383,16 @@ function submit_button_click_handler(e)
 	release_next_question_flag();
 }
 
+function previous_question(e){
+	if (current_step_number <= 0){
+		return; // do nothing
+	}
+	current_step_number -= 1;
+	step_to_display = steps[current_step_number];
+	step_to_display.response = '';
+	display_step(step_to_display, current_step_number);
+}
+
 </script>
 </head>
 <body onload="display_first_question();">
@@ -384,23 +405,32 @@ function submit_button_click_handler(e)
 			</div>
 		</div>
 		<div class="row">
-			<div id="hint_text" class="text-left h4">Here's a hint: You're doing great!</div>
+			<div id="hint_text" class="text-left h4">Here's a hint: The Javascript wasn't executed correctly.</div>
 		</div>
+
 		<div class="row">
 			<textarea id="response_textarea" style="width:50%;"></textarea>
 		</div>
+		
 		<div class="row">
 			<input id="submit_button" type="button" value="Next/Submit response" onclick="submit_button_click_handler();" class="btn btn-primary"/>
-			<div id ="question_number_holder">1/14</div>
 		</div>
 		<div class="row">
+		<div>Step <div id="question_number_holder" style="display:inline-block;">1/14</div></div>
+		</div>
+		<div class="row">
+			<div id="responses_headline" class="text h4 bold">Responses:</div>
 			<dl id="results_area" class="dl-horizontal"></dl>
+		</div>
+		<div class="row">
+			<input id="previous_button" type="button" value="Previous question" class="btn-xs" onclick="previous_question();" />
 		</div>
 	</div>
 </div>
+
 <hr/>
 <div class="container">
-	<div class="row"><input type="button" value="Restart" onclick="restart();" class="btn btn-danger btn-small"/></div>
+	<div class="row"><input type="button" value="Restart" onclick="restart();" class="btn-danger btn-xs"/></div>
 	<div class="row"><div class="text-small small"><em>Your answers are private and are not saved anywhere.</em></div></div>
 	<div class="row"><div class="text-small small"><em>Website code by Kevin Verre.</em></div></div>
 	<div class="row"><div class="text-small small"><em>
