@@ -9,18 +9,18 @@
 <script>
 console.log("Script begins");
 
-// Code and text Copyright Kevin Verre
+// Code and text Copyright Kevin Verre (author of code and text)
 
 // Inspired by the ideas of Byron Katie, author of "Loving What Is"
 
-// Array of steps. Each step co`ntains a question for the user
+// Array of steps. Each step contains a question for the user
 // Each step also contains how to handle the user's response
 var steps =
 [
 	{
 		"id": "welcome",
 		"prompt": "Welcome! I will ask you some helpful questions.",
-		"hint": "These questions are designed to help you worry less about your life, and to motivate you.<br/>Please submit anything to continue. (Press Enter or Click Button to submit)",
+		"hint": "These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. (Press Enter or Click Button to submit)",
 		"response": "",
 		"response_handler": "handle_initial_response",
 		"result_tag": ""
@@ -36,7 +36,7 @@ var steps =
 	{
 		"id": "feel",
 		"prompt": "How do you FEEL when you think about whatever is troubling you? How does '#{NOUN}' make you feel? ",
-		"hint": "Examples: Hopeless, intimidated, frustrated, angry, scared, unmotivated, uninterested",
+		"hint": "Examples: Hopeless, intimidated, frustrated, angry, scared, unmotivated, uninterested, unpset",
 		"response": "",
 		"response_handler": "save_feeling_response",
 		"result_tag": "Feeling"
@@ -68,7 +68,7 @@ var steps =
 	{
 		"id": "react",
 		"prompt": "How do you react when you think or believe '#{THOUGHT}'?",
-		"hint": "Examples: I get scared, I procrastinate, I avoid dealing with it or thinking about it",
+		"hint": "Examples: I get scared, I procrastinate, I wish..., I avoid dealing with it or thinking about it",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Reaction"
@@ -442,9 +442,9 @@ function keyup_backarrow_key_handler(e){
 <div class="container">
 	<div class="row"><input type="button" value="Restart" onclick="restart();" class="btn-danger btn-xs"/></div>
 	<div class="row"><div class="text-small small"><em>Your answers are private and are not saved anywhere.</em></div></div>
-	<div class="row"><div class="text-small small"><em>Website code by Kevin Verre.</em></div></div>
-	<div class="row"><div class="text-small small"><em>
-		Questions inspired by book "Loving What Is" and the "Love Your Neighbor" worksheet by Byron Katie. (<a href="thework.com">thework.com</a>)</em></div>
+	<div class="row"><div class="text-small small">Website code and text by Kevin Verre.</div></div>
+	<div class="row"><div class="text-small small">
+		Questions inspired by book "Loving What Is" and the "Love Your Neighbor" worksheet by Byron Katie. (<a href="thework.com">thework.com</a>)</div>
 	</div>
 	<div class="row text-small small"><a href="http://thework.com/sites/thework/downloads/worksheets/JudgeYourNeighbor_Worksheet.pdf">Link to Byron Katie's worksheet</a></div>
 </div>
@@ -456,11 +456,15 @@ function keyup_backarrow_key_handler(e){
 
 		<p>I answers these questions whenever I'm feeling worried, nervous, frustrated, lazy, or unmotivated about something.</p>
 
+		<p>Answer the questions HONESTLY. Don't give an answer just because you think it's the "right" answer or the answer you think you SHOULD give. Give the answer that truely reflects what you're thinking and feeling.</p>
+
 		<p>The purpose is not necessarily to change your feelings about the issue, but to change your action. For example, if there is something you're angry about, the goal is not necessarily to make you stop being completely frustrated about it. But hopefully it will inspire you to take productive action. Same for if you have something you are procrastinating on. You might not become excited about your chore, but you'll at least stop procrastinating and start doing it.</p>
 
 		<p>These questions should get your brain thinking in a way that it wasn't before.</p>
 
 		<p>This tool is designed to hopefully be quick and easy to use. After using it enough, you can answer the questions very quickly. You don't even have to answer all the questions. Sometimes I stop after answering the question about "Who would you be WITHOUT the thought/belief?"</p>
+
+		<p>All of the code for this site runs in your browser. You can see the source code by right-clicking and selecting View Source.</p>
 	</div>
 </div>
 
