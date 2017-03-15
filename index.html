@@ -34,6 +34,14 @@ var steps =
 		"result_tag": "Thing bothering you"
 	},
 	{
+		"id": "premeasure",
+		"prompt": "How upsetting is '#{NOUN}' to you?",
+		"hint": "On a scale of 1-10, (10 is extremely upsetting, 1 is only a tiny bit upsetting)",
+		"response": "",
+		"response_handler": "",
+		"result_tag":"How upset"
+	},
+	{
 		"id": "feel",
 		"prompt": "How do you FEEL when you think about whatever is troubling you? How does '#{NOUN}' make you feel? ",
 		"hint": "Examples: Hopeless, intimidated, frustrated, angry, scared, unmotivated, uninterested, unpset",
@@ -152,6 +160,14 @@ var steps =
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Feeling now"
+	},
+	{
+		"id": "postmeasure",
+		"prompt": "How upsetting is '#{NOUN}' to you now?",
+		"hint": "On a scale of 1-10, (10 is extremely upsetting, 1 is only a tiny bit upsetting)",
+		"response": "",
+		"response_handler": "",
+		"result_tag":"How upset after"
 	},
 	{
 		"id": "end",
@@ -450,7 +466,6 @@ function keyup_backarrow_key_handler(e){
 </div>
 <hr/>
 <div class="container">
-	<br/>
 	<div class="row text-left text-small small">
 		<p>MORE INFO:</p>
 
