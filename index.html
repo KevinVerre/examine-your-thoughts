@@ -59,7 +59,7 @@ var steps =
 	},
 	{
 		"id": "true",
-		"prompt": "'#{THOUGHT}' ...Is it true?",
+		"prompt": "'#{THOUGHT}' ...Is it true?<sup><em>*</em></sup>",
 		"hint": "Be honest! It's OK to say <em>Yes</em> if you feel it is true to you right now. It doesn't matter if you say <em>Yes</em> or <em>No</em>.",
 		"response": "",
 		"response_handler": "",
@@ -67,7 +67,7 @@ var steps =
 	},
 	{
 		"id": "absolutely",
-		"prompt": "'#{THOUGHT}' ...Can you absolutely be sure it is true?",
+		"prompt": "'#{THOUGHT}' ...Can you absolutely be sure it is true?<sup><em>*</em></sup>",
 		"hint": "Again, be honest. Say <em>Yes</em> if it is still absolutely true right now.",
 		"response": "",
 		"response_handler": "",
@@ -75,7 +75,7 @@ var steps =
 	},
 	{
 		"id": "react",
-		"prompt": "How do you react when you think or believe '#{THOUGHT}'?",
+		"prompt": "How do you react when you think or believe '#{THOUGHT}'?<sup><em>*</em></sup>",
 		"hint": "Examples: I get scared, I procrastinate, I wish..., I avoid dealing with it or thinking about it",
 		"response": "",
 		"response_handler": "",
@@ -83,7 +83,7 @@ var steps =
 	},
 	{
 		"id": "without",
-		"prompt": "Who would you be without the thought '#{THOUGHT}'? How would you react?",
+		"prompt": "Who would you be without the thought '#{THOUGHT}'?<sup><em>*</em></sup> How would you react?",
 		"hint": "",
 		"response": "",
 		"response_handler": "",
@@ -91,7 +91,7 @@ var steps =
 	},
 		{
 		"id": "treat",
-		"prompt": "How do you treat '#{NOUN}' when you think '#{THOUGHT}'?",
+		"prompt": "How do you treat '#{NOUN}' when you think '#{THOUGHT}'?<sup><em>*</em></sup>",
 		"hint": "",
 		"response": "",
 		"response_handler": "",
@@ -99,7 +99,7 @@ var steps =
 	},
 	{
 		"id": "envision",
-		"prompt": "What do you see, envision, or imagine when you believe '#{THOUGHT}'?",
+		"prompt": "What do you see, envision, or imagine when you believe '#{THOUGHT}'?<sup><em>*</em></sup>",
 		"hint": "",
 		"response": "",
 		"response_handler": "",
@@ -115,7 +115,7 @@ var steps =
 	},
 	{
 		"id": "drop",
-		"prompt": "Can you see a reason to drop the thought '#{THOUGHT}'?",
+		"prompt": "Can you see a reason to drop the thought '#{THOUGHT}'?<sup><em>*</em></sup>",
 		"hint": "",
 		"response": "",
 		"response_handler": "",
@@ -123,7 +123,7 @@ var steps =
 	},
 	{
 		"id": "turnaround",
-		"prompt": "What are some of the turnarounds? (for '#{THOUGHT}')",
+		"prompt": "What are some of the turnarounds?<sup><em>*</em></sup> (for '#{THOUGHT}')",
 		"hint": "A turn around is where you rephrase the thought toward yourself or towards the opposite in a way that you believe is more true",
 		"response": "",
 		"response_handler": "",
@@ -172,7 +172,7 @@ var steps =
 	{
 		"id": "end",
 		"prompt": "The End",
-		"hint": "Hope this thinking exercise helped you feel better. ",
+		"hint": "Hope this thinking exercise helped you feel better.<br/><em>Refresh this page or hit the Restart button below to try it again.</em>",
 		"response":"",
 		"response_handler": "",
 		"result_tag": ""
@@ -468,6 +468,8 @@ function keyup_backarrow_key_handler(e){
 <div class="container">
 	<div class="row text-left text-small small">
 		<p>MORE INFO:</p>
+
+		<p>* Some of the phrases come from Byron Katie's writing. I use an asterisk (*) to attribute a question or phrase to her.</p>
 
 		<p>I answers these questions whenever I'm feeling worried, nervous, frustrated, lazy, or unmotivated about something.</p>
 
