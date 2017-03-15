@@ -20,7 +20,7 @@ var steps =
 	{
 		"id": "welcome",
 		"prompt": "Welcome! I will ask you some helpful questions.",
-		"hint": "These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. (Press Enter or Click Button to submit)",
+		"hint": "These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. <em>(Click Button or Press Enter to submit)</em>",
 		"response": "",
 		"response_handler": "handle_initial_response",
 		"result_tag": ""
@@ -43,7 +43,7 @@ var steps =
 	},
 	{
 		"id": "feel",
-		"prompt": "How do you FEEL when you think about whatever is troubling you? How does '#{NOUN}' make you feel? ",
+		"prompt": "How do you FEEL when you think about '#{NOUN}'? How does it make you feel? ",
 		"hint": "Examples: Hopeless, intimidated, frustrated, angry, scared, unmotivated, uninterested, unpset",
 		"response": "",
 		"response_handler": "save_feeling_response",
@@ -60,7 +60,7 @@ var steps =
 	{
 		"id": "true",
 		"prompt": "'#{THOUGHT}' ...Is it true?",
-		"hint": "Be honest! It's OK to say Yes if you feel it is true to you right now. It doesn't matter if you say Yes or No.",
+		"hint": "Be honest! It's OK to say <em>Yes</em> if you feel it is true to you right now. It doesn't matter if you say <em>Yes</em> or <em>No</em>.",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "True"
@@ -68,7 +68,7 @@ var steps =
 	{
 		"id": "absolutely",
 		"prompt": "'#{THOUGHT}' ...Can you absolutely be sure it is true?",
-		"hint": "Again, say Yes if it is true right now.",
+		"hint": "Again, be honest. Say <em>Yes</em> if it is still absolutely true right now.",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Absolutely true"
@@ -190,12 +190,12 @@ function prep_string(string_in){
 	// Only replaces the first occurance in the string
 
 	// if the string has #{THOUGHT} replace it with the user's thought
-	string_out = string_in.replace("#{THOUGHT}", response.thought);
+	string_out = string_in.replace("#{THOUGHT}", "<em>" + response.thought + "</em>");
 	// if the string has #{FEELING} replace it with the user's feeling
-	string_out = string_out.replace("#{FEELING}", response.feeling);
+	string_out = string_out.replace("#{FEELING}", "<em>" + response.feeling + "</em>");
 
 	// if the string has #{NOUN} replace it with the user's noun
-	string_out = string_out.replace("#{NOUN}", response.noun);
+	string_out = string_out.replace("#{NOUN}", "<em>" + response.noun + "</em>");
 
 	return string_out;
 }
@@ -243,7 +243,7 @@ function display_step(step, current_step_number){
 	$('#response_textarea').val('').focus();
 	// display the prompt
 	prepped_prompt = prep_string(step.prompt);
-	$('#prompt_text').text(prepped_prompt);
+	$('#prompt_text').html(prepped_prompt);
 	// display the hint
 	prepped_hint = prep_string(step.hint);
 	$('#hint_text').html(prepped_hint);
@@ -479,7 +479,7 @@ function keyup_backarrow_key_handler(e){
 
 		<p>This tool is designed to hopefully be quick and easy to use. After using it enough, you can answer the questions very quickly. You don't even have to answer all the questions. Sometimes I stop after answering the question about "Who would you be WITHOUT the thought/belief?"</p>
 
-		<p>All of the code for this site runs in your browser. You can see the source code by right-clicking and selecting View Source.</p>
+		<p>All of the code for this site runs in your browser. You can see the source code by right-clicking and selecting View Page Source.</p>
 
 		<br/><br/>
 	</div>
