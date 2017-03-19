@@ -282,7 +282,7 @@ function display_step(step, current_step_number){
 	for (var i = 0; i <= current_step_number; i++){
 		temp_step = steps[i];
 		if (temp_step.result_tag != "") {
-			result_string = "<tr><td style=\"vertical-align:baseline;\"lass=\"col-md-2 col-sm-5 text-left\"><b>" + temp_step.result_tag + ": </b></td>"
+			result_string = "<tr><td style=\"vertical-align:baseline;\" class=\"col-md-2 col-sm-5 text-left\"><b>" + temp_step.result_tag + ": </b></td>"
 			result_string += "<td style=\"vertical-align:baseline;\" class=\"col-md-10 col-sm-7 text-left\">" + temp_step.response + "</td></tr>";
 			results_area.append(result_string)
 		}
