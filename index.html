@@ -6,8 +6,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-<title>Examine Your Thoughts.com</title>
+<title>Examine Your Thoughts</title>
 <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+<meta name="description" content="Answer helpful questions about what's upsetting you."/>
 
 <meta property="og:title" content="ExamineYourThoughts.com">
 <meta property="og:description" content="Answer helpful questions about what's upsetting you.">
@@ -34,7 +35,7 @@ var steps =
 // Each step also contains how to handle the user's response
 	{
 		"id": "welcome",
-		"prompt": "Welcome! I will ask you some helpful questions.",
+		"prompt": "<h5><em>ExamineYourThoughts.com</em></h5>Welcome! I will ask you some helpful questions.",
 		"hint": "Are you upset, angry, unmotivated, or worried about something?<br/>These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. <em>(Click Button or Press Enter to submit)</em>",
 		"response": "",
 		"response_handler": "handle_initial_response",
