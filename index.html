@@ -6,8 +6,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-<title>Examine Your Thoughts.com</title>
+<title>Examine Your Thoughts</title>
 <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+<meta name="description" content="Answer helpful questions about what's upsetting you."/>
 
 <meta property="og:title" content="ExamineYourThoughts.com">
 <meta property="og:description" content="Answer helpful questions about what's upsetting you.">
@@ -34,7 +35,7 @@ var steps =
 // Each step also contains how to handle the user's response
 	{
 		"id": "welcome",
-		"prompt": "Welcome! I will ask you some helpful questions.",
+		"prompt": "<h5><em>ExamineYourThoughts.com</em></h5>Welcome! I will ask you some helpful questions.",
 		"hint": "Are you upset, angry, unmotivated, or worried about something?<br/>These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. <em>(Click Button or Press Enter to submit)</em>",
 		"response": "",
 		"response_handler": "handle_initial_response",
@@ -142,7 +143,7 @@ var steps =
 		"hint": "",
 		"response": "",
 		"response_handler": "",
-		"result_tag": "Can I see a reason to drop the thought"
+		"result_tag": "Drop thought"
 	},
 	{
 		"id": "turnaround",
@@ -174,7 +175,7 @@ var steps =
 		"hint": "",
 		"response": "",
 		"response_handler": "",
-		"result_tag": "Advice for myself"
+		"result_tag": "Advice"
 	}, 
 	{
 		"id": "postmeasure",
@@ -190,7 +191,7 @@ var steps =
 		"hint": "",
 		"response": "",
 		"response_handler": "",
-		"result_tag": "Feeling now"
+		"result_tag": "Feeling"
 	},
 	{
 		"id": "end",
@@ -281,7 +282,8 @@ function display_step(step, current_step_number){
 	for (var i = 0; i <= current_step_number; i++){
 		temp_step = steps[i];
 		if (temp_step.result_tag != "") {
-			result_string = "<dt class=\"text-right\">" + temp_step.result_tag + ":</dt><dd class=\"text-left\">" + temp_step.response + "</dd>";
+			result_string = "<tr><td style=\"vertical-align:baseline;\"lass=\"col-md-2 col-sm-5 text-left\"><b>" + temp_step.result_tag + ": </b></td>"
+			result_string += "<td style=\"vertical-align:baseline;\" class=\"col-md-10 col-sm-7 text-left\">" + temp_step.response + "</td></tr>";
 			results_area.append(result_string)
 		}
 	}
@@ -475,7 +477,11 @@ function keyup_backarrow_key_handler(e){
 		</div>
 		<div class="row">
 			<div id="responses_headline" class="text h4 bold">Responses:</div>
-			<dl id="results_area" class="dl-horizontal"></dl>
+		</div>
+		<div class="row">
+			<div class="table-responsive">
+			<table id="results_area" class="table table-condensed"></table>
+			</div>
 		</div>
 		<div class="row">
 			<input id="previous_button" type="button" value="Previous question" class="btn btn-default btn-xs" onclick="previous_question();" />
