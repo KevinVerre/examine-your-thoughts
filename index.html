@@ -354,6 +354,20 @@
 				}
 			}
 
+			function print_all_questions(){ // debug function
+				var x = 0;
+				while (x < total_number_steps) {
+					var xstep = steps[x];
+					var question = xstep.prompt;
+					question += " // " + xstep.hint;
+					// Regex to clean up the text. Remove the HTML < > tags
+					// The question mark is lazy matching rather than greedy matching
+					question = question.replace(/<.*?>/g, ' '); 
+					console.log(question);
+					x++;
+				}
+			}
+
 			function cleanup(){
 				// hide the submit button
 				$('#submit_button').hide();
