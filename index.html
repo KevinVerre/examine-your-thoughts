@@ -368,6 +368,38 @@
 				}
 			}
 
+			function show_all_questions(){
+				$('#show_all_button').hide();
+				$('#show_one_button').show();
+				$('#prompt_container').hide();
+				$('#all_questions_container').show();
+
+				var x = 0; var str = "";
+				str = "Here you can see all of the questions in the program. However, it is not interactive in this mode.<br/><br/>";
+				while (x < total_number_steps) {
+					var xstep = steps[x];
+					var prompt = xstep.prompt;
+					var hint = xstep.hint;
+
+					prompt = prompt.replace(/<.*?>/g, ' ').trim();
+					hint = hint.replace(/<.*?>/g, ' ').trim();
+
+					str += "<b>"+prompt+"</b></br>"+hint+"<br/><br/>";
+					x++;
+				}
+
+				$('#all_questions_row').html(str);
+			}
+
+			function show_one_question(){
+				$('#show_all_button').show();
+				$('#show_one_button').hide();
+				$('#prompt_container').show();
+				$('#all_questions_container').hide();
+
+
+			}
+
 			function cleanup(){
 				// hide the submit button
 				$('#submit_button').hide();
@@ -477,7 +509,7 @@
 	<body onload="display_first_question();">
 
 		<div class="jumbotron" style="background-color: #ffe0e5; border-bottom: 1px solid #eeeeee">
-			<div class="container">
+			<div id="prompt_container" class="container">
 				<div class="row">
 					<div>
 						<div id="prompt_text" class="text-left h2">Hello! The JavaScript should execute and replace this text.</div>
@@ -509,9 +541,17 @@
 					<input id="previous_button" type="button" value="Previous question" class="btn btn-default btn-xs" onclick="previous_question();" />
 				</div>
 			</div>
+			<div id="all_questions_container" class="container" style="display: none;">
+				<div id="all_questions_row" class="row">
+				</div>
+			</div>
 		</div>
 		<div class="container">
-			<div class="row"><input type="button" value="Restart" onclick="restart();" class="btn-danger btn-xs"/></div>
+			<div class="row">
+				<input type="button" value="Restart" onclick="restart();" class="btn-danger btn-xs"/>
+				<input type="button" id="show_all_button" value="See All Questions" onclick="show_all_questions();" class="btn-default btn-xs"/>
+				<input type="button" id="show_one_button" value="Back to Interactive Questions" onclick="show_one_question();" class="btn-default btn-xs" style="display: none;"/>
+			</div>
 			<div class="row"><div class="text-small small"><em>Your answers are private and are not saved anywhere.</em></div></div>
 			<div class="row"><div class="text-small small">Website code and text by Kevin Verre.</div></div>
 			<div class="row"><div class="text-small small">
@@ -552,11 +592,10 @@
 				<p><b><a href="https://goo.gl/forms/gBhQUkZUruNdffD52" target="_blank">Click here to submit feedback or contact me</a></b></p>
 
 				<p>Love the site and want to support it? <a href="https://paypal.me/KevinVerre" target="_blank">Click here to donate via PayPal</a><p>
-
-				<br/><br/>
 			</div>
 		</div>
 
+		<br/><br/>
 	</body>
 </html>
 
