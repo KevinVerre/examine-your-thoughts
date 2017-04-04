@@ -20,6 +20,11 @@
 			.jumbotron .container, .container {
 				max-width: 98%;
 			}
+
+			.show-one-button:hover {
+				background-color: #ffe0e5;
+				border-color: pink;
+			}
 		</style>
 
 		<script>
@@ -369,22 +374,30 @@
 			}
 
 			function show_all_questions(){
+				$('#jumbotron').css('background-color','white');
 				$('#show_all_button').hide();
-				$('#show_one_button').show();
+				$('.show-one-button').show();
 				$('#prompt_container').hide();
 				$('#all_questions_container').show();
 
+
 				var x = 0; var str = "";
-				str = "Here you can see all of the questions in the program. However, it is not interactive in this mode.<br/><br/>";
+				str = "";
 				while (x < total_number_steps) {
 					var xstep = steps[x];
 					var prompt = xstep.prompt;
 					var hint = xstep.hint;
+					var answer = xstep.response;
 
 					prompt = prompt.replace(/<.*?>/g, ' ').trim();
 					hint = hint.replace(/<.*?>/g, ' ').trim();
+					answer = answer.trim();
+					if (answer != "") {
+						answer = "> " + answer;
+					}
+					prompt = "" + (x+1)+ ") "+ prompt;
 
-					str += "<b>"+prompt+"</b></br>"+hint+"<br/><br/>";
+					str += "<b>"+prompt+"</b></br>"+hint+"<br/><i>"+answer+"</i><br/><br/>";
 					x++;
 				}
 
@@ -392,8 +405,9 @@
 			}
 
 			function show_one_question(){
+				$('#jumbotron').css('background-color','#ffe0e5');
 				$('#show_all_button').show();
-				$('#show_one_button').hide();
+				$('.show-one-button').hide();
 				$('#prompt_container').show();
 				$('#all_questions_container').hide();
 
@@ -508,7 +522,7 @@
 	</head>
 	<body onload="display_first_question();">
 
-		<div class="jumbotron" style="background-color: #ffe0e5; border-bottom: 1px solid #eeeeee">
+		<div class="jumbotron" id="jumbotron" style="background-color: #ffe0e5; border-bottom: 1px solid #eeeeee">
 			<div id="prompt_container" class="container">
 				<div class="row">
 					<div>
@@ -542,15 +556,19 @@
 				</div>
 			</div>
 			<div id="all_questions_container" class="container" style="display: none;">
-				<div id="all_questions_row" class="row">
+				<div id="all_questions_description" class="row">
+					Here you can see all of the questions in the program. However, it is not interactive in this mode.<br/>
+					<input type="button" id="show_one_button_top" value="Back to Interactive Questions" onclick="show_one_question();" class="btn-default btn-xs show-one-button" style=""/>
+					<hr/>
 				</div>
+				<div id="all_questions_row" class="row"></div>
 			</div>
 		</div>
 		<div class="container">
 			<div class="row">
 				<input type="button" value="Restart" onclick="restart();" class="btn-danger btn-xs"/>
 				<input type="button" id="show_all_button" value="See All Questions" onclick="show_all_questions();" class="btn-default btn-xs"/>
-				<input type="button" id="show_one_button" value="Back to Interactive Questions" onclick="show_one_question();" class="btn-default btn-xs" style="display: none;"/>
+				<input type="button" id="show_one_button_bottom" value="Back to Interactive Questions" onclick="show_one_question();" class="btn-default btn-xs show-one-button" style="display: none;"/>
 			</div>
 			<div class="row"><div class="text-small small"><em>Your answers are private and are not saved anywhere.</em></div></div>
 			<div class="row"><div class="text-small small">Website code and text by Kevin Verre.</div></div>
