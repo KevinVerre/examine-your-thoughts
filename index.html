@@ -340,10 +340,9 @@
 				$('#submit_button').focus();
 				$('#response_textarea').on('keypress', enter_key_handler);
 				$('#response_textarea').on('keyup', textarea_keyup);
-				$('body').on('keyup', keyup_backarrow_key_handler);
-
-
-				//$('#submit_button').on('click', test_submit_button_click_handler);
+				
+				// Disabled to improve user experience
+				//$('body').on('keyup', keyup_backarrow_key_handler);
 
 			}
 
@@ -509,10 +508,12 @@
 				$('#response_textarea').show();
 			}
 
+			// Previous question if you hit the back arrow key. Submit question on forward arrow key
+			// This can get annoying if you are typing and use the arrow keys to move the cursor so I'm disabbling it.
 			function keyup_backarrow_key_handler(e){
-				if (e.keyCode == 37){
+				if (e.keyCode == 37){ // Back arrow key
 					previous_question(e);
-				} else if (e.keyCode == 39) {
+				} else if (e.keyCode == 39) { // forward arrow key
 					submit_response_handler();
 					release_next_question_flag();
 				}
