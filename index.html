@@ -500,12 +500,13 @@
 				}
 				current_step_number -= 1;
 				step_to_display = steps[current_step_number];
-				step_to_display.response = '';
+				old_response = step_to_display.response;
 				display_step(step_to_display, current_step_number);
 				// show the submit button, may have been hidden at the end
 				$('#submit_button').show();
 				// show the input textarea
-				$('#response_textarea').show();
+				$('#response_textarea').show().val(old_response).select();
+
 			}
 
 			// Previous question if you hit the back arrow key. Submit question on forward arrow key
