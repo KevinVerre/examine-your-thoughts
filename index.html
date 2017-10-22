@@ -22,8 +22,8 @@
 			}
 
 			.show-one-button:hover {
-				background-color: #ffe0e5;
-				border-color: pink;
+				background-color: #a9d1ff;
+				border-color: blue;
 			}
 		</style>
 
@@ -33,8 +33,60 @@
 
 			console.log("Script begins");
 
+			var short_list_of_questions =[
+				{
+					"id": "welcome",
+					"prompt": "<h5><em>ExamineYourThoughts.com</em></h5>Welcome! I will ask you some helpful questions.",
+					"hint": "Are you upset, angry, unmotivated, or worried about something?<br/>These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. <em>(Click Button or Press Enter to submit)</em><br/><br/>This is the shorter version.",
+					"response": "",
+					"response_handler": "handle_initial_response",
+					"result_tag": ""
+				},
+				{
+					"id":"thought",
+					"prompt":"What is the thought or belief that you want to examine?",
+					"hint":"",
+					"response":"",
+					"response_handler":"",
+					"result_tag":"Thought"
+				},
+				{
+					"id":"true",
+					"prompt":"Is it true?<sup><em>*</em></sup>",
+					"hint":"",
+					"result_tag":"True?"
+				},
+				{
+					"id":"absolutely",
+					"prompt":"Can you be absolutely sure it is true?",
+					"result_tag":"Absolutely?"
+				},
+				{
+					"id":"react",
+					"prompt":"How do you react when you believe this thought?",
+					"result_tag":"Reaction?"
+				},
+				{
+					"id":"without",
+					"prompt":"Who would you be without this thought?",
+					"result_tag":"Without?"
+				},
+				{
+					"id":"turnaround",
+					"prompt":"How can you turn it around?",
+					"result_tag":"Turnaround?"
+				},
+				{
+					"id": "end",
+					"prompt": "The End",
+					"hint": "I hope this thinking exercise helped you feel a little better.<br/><em>Refresh this page or hit the Restart button below to try it again.</em>",
+					"response":"",
+					"response_handler": "",
+					"result_tag": ""
+				}
+			];
 
-			var steps =
+			var long_list_of_questions =
 			[
 			// Array of steps. Each step contains a question for the user
 			// Each step also contains how to handle the user's response
@@ -216,6 +268,12 @@
 				}
 			];
 
+			const SHORT_LIST = "short-list";
+			const LONG_LIST = "long-list";
+
+			var steps = long_list_of_questions;
+			var steps_str = LONG_LIST;
+
 			// The most important user response's are saved here
 			var response = {
 				"noun": "",
@@ -223,7 +281,21 @@
 				"thought": ""
 			};
 
+			function swap_question_set(){
+				// if we are short, become long. If we are long, become short.
+				if (steps_str == SHORT_LIST) {
+					steps_str = LONG_LIST;
+					steps = long_list_of_questions;
+				} else {
+					steps_str = SHORT_LIST;
+					steps = short_list_of_questions;
+				}
+				clear_results();
+				display_first_question();
+			}
+
 			function prep_string(string_in){
+				if (string_in == null) return "";
 				// Only replaces the first occurance in the string
 
 				// if the string has #{THOUGHT} replace it with the user's thought
@@ -296,7 +368,7 @@
 					temp_step = steps[i];
 					if (temp_step.result_tag != "") {
 						result_string = "<tr><td style=\"vertical-align:baseline;\" class=\"col-md-2 col-sm-5 text-left\"><b>" + temp_step.result_tag + ": </b></td>"
-						result_string += "<td style=\"vertical-align:baseline;\" class=\"col-md-10 col-sm-7 text-left\">" + temp_step.response + "</td></tr>";
+						result_string += "<td style=\"vertical-align:baseline;\" class=\"col-md-10 col-sm-7 text-left\">" + (temp_step.response || "")+ "</td></tr>";
 						results_area.append(result_string)
 					}
 				}
@@ -331,11 +403,19 @@
 			var total_number_steps = steps.length;
 
 			// INITIALIZE function
-			function display_first_question(){
-				$('#response_textarea').hide(); // attach Enter key handler and hide, it starts out hidden
+			function onload_initialize(){
+				display_first_question();
+			}
 
-				var current_step_number = 0;
+			function display_first_question(){
+
+				// attach Enter key handler and hide, it starts out hidden
+				$('#response_textarea').hide(); 
+
+				total_number_steps = steps.length;
+				current_step_number = 0;
 				first_step = steps[0];
+				$('#submit_button').show();
 				display_step(first_step, 0);
 				$('#submit_button').focus();
 				$('#response_textarea').on('keypress', enter_key_handler);
@@ -385,7 +465,7 @@
 				while (x < total_number_steps) {
 					var xstep = steps[x];
 					var prompt = xstep.prompt;
-					var hint = xstep.hint;
+					var hint = xstep.hint || "";
 					var answer = xstep.response;
 
 					prompt = prompt.replace(/<.*?>/g, ' ').trim();
@@ -456,10 +536,10 @@
 				// Save the user's response
 				cur_step = steps[current_step_number];
 				user_response = $('#response_textarea').val().trim();
-				cur_step.response = user_response;
+				cur_step.response = user_response || "";
 
 				// execute that step's unique response handler
-				if (cur_step.response_handler != ""){
+				if (cur_step.response_handler && cur_step.response_handler != ""){
 					name_of_function = cur_step.response_handler;
 					window[name_of_function]();
 				}
@@ -482,6 +562,12 @@
 				}
 			}
 
+			function clear_results(){
+				for (var i = 0; i < steps.length; i++){
+					steps[i].response = "";
+				}
+			}
+
 			function test_submit_button_click_handler(e)
 			{
 				console.log("test_submit_button_click_handler function entered");
@@ -501,7 +587,7 @@
 				}
 				current_step_number -= 1;
 				step_to_display = steps[current_step_number];
-				old_response = step_to_display.response;
+				old_response = step_to_display.response || "";
 				display_step(step_to_display, current_step_number);
 				// show the submit button, may have been hidden at the end
 				$('#submit_button').show();
@@ -523,13 +609,13 @@
 
 		</script>
 	</head>
-	<body onload="display_first_question();">
+	<body onload="onload_initialize();">
 
 		<div class="jumbotron" id="jumbotron" style="background-color: #ffe0e5; border-bottom: 1px solid #eeeeee">
 			<div id="prompt_container" class="container">
 				<div class="row">
 					<div>
-						<div id="prompt_text" class="text-left h2">Hello! The JavaScript should execute and replace this text.</div>
+						<div id="prompt_text" class="text-left h2">Hello! The JavaScript should have executed and replaced this text.</div>
 					</div>
 				</div>
 				<div class="row">
@@ -582,6 +668,10 @@
 				<a href="http://thework.com/sites/thework/downloads/worksheets/JudgeYourNeighbor_Worksheet.pdf">Link to Byron Katie's worksheet</a>
 			</div>
 			<div class="row"><div class="text-small small">* Some of the phrases come from Byron Katie's writing. I use an asterisk (*) to attribute a question or phrase to her.</div></div>
+			<br/>
+			<div class="row">
+				<input type="button" value="Try a different set of questions" id="swap-question-set-btn" onclick="swap_question_set();" class="btn-default btn-sm" />
+			</div>
 		</div>
 		<hr/>
 		<div class="container">
