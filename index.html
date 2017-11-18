@@ -37,7 +37,7 @@
 				{
 					"id": "welcome",
 					"prompt": "<h5><em>ExamineYourThoughts.com</em></h5>Welcome! I will ask you some helpful questions.",
-					"hint": "Are you upset, angry, unmotivated, or worried about something?<br/>These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. <em>(Click Button or Press Enter to submit)</em><br/><br/>This is the shorter version.<br>It only asks the most important questions.",
+					"hint": "Are you upset, angry, unmotivated, or worried about something?<br/>These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. <em>(Click Button or Press Enter to submit)</em><br/><br/><i>This is the shorter version.<br>It only asks the most important questions. You can try the other question set if you like.</i>",
 					"response": "",
 					"response_handler": "handle_initial_response",
 					"result_tag": ""
@@ -275,9 +275,9 @@
 
 			const SHORT_LIST = "short-list";
 			const LONG_LIST = "long-list";
-
-			var steps = long_list_of_questions;
-			var steps_str = LONG_LIST;
+			// These must both be changed.
+			var steps = short_list_of_questions; // These must both be changed.
+			var steps_str = SHORT_LIST; // These must both be changed.
 
 			// The most important user response's are saved here
 			var response = {
