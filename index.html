@@ -103,7 +103,7 @@
 				{
 					"id": "welcome",
 					"prompt": "<h5><em>ExamineYourThoughts.com</em></h5>Welcome! I will ask you some helpful questions.",
-					"hint": "Are you upset, angry, unmotivated, or worried about something?<br/>These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. <em>(Click Button or Press Enter to submit)</em>",
+					"hint": "Are you upset, angry, unmotivated, or worried about something?<br/>These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. <em>(Click Button or Press Enter to submit)</em><br/><br/><i>This is the full version.<br>It asks all questions. You can try the other question set if you like.</i>",
 					"response": "",
 					"response_handler": "handle_initial_response",
 					"result_tag": ""
@@ -175,7 +175,7 @@
 					{
 					"id": "treat",
 					"prompt": "How do you treat '#{NOUN}' when you think '#{THOUGHT}'?<sup><em>*</em></sup>",
-					"hint": "",
+					"hint": "And how do you treat yourself?",
 					"response": "",
 					"response_handler": "",
 					"result_tag": "Behavior"
@@ -211,6 +211,30 @@
 					"response": "",
 					"response_handler": "",
 					"result_tag": "Drop thought"
+				},
+				{
+					"id": "turnaround_self",
+					"prompt": "How can you turn the thought around to YOURSELF?<sup><em>*</em></sup>",
+					"hint": "Instead of ABC does XYZ, how do YOU do XYZ?",
+					"response": "",
+					"response_handler":"",
+					"result_tag":"Turnaround (self)"
+				},
+				{
+					"id": "turnaround_other",
+					"prompt": "How can you turn the thought around the OTHER WAY?<sup><em>*</em></sup>",
+					"hint": "Instead of ABC does XYZ to me, how do YOU do XYZ to ABC?",
+					"response": "",
+					"response_handler":"",
+					"result_tag":"Turnaround (other)"
+				},
+				{
+					"id": "turnaround_opposite",
+					"prompt": "How can you turn the thought around to the OPPOSITE?<sup><em>*</em></sup>",
+					"hint": "Instead of ABC does/is XYZ, how is the opposite true? ABC does/is NOT XYZ",
+					"response": "",
+					"response_handler":"",
+					"result_tag":"Turnaround (opposite)"
 				},
 				{
 					"id": "turnaround",
@@ -280,9 +304,15 @@
 
 			const SHORT_LIST = "short-list";
 			const LONG_LIST = "long-list";
-			// These must both be changed.
-			var steps = short_list_of_questions; // These must both be changed.
-			var steps_str = SHORT_LIST; // These must both be changed.
+			// This must both be changed.
+			var steps_str = LONG_LIST; // This determines which one it starts with
+
+			var steps;
+			if (steps_str == SHORT_LIST) { // DO NOT change this one
+				steps = short_list_of_questions;
+			} else {
+				steps = long_list_of_questions;
+			}
 
 			// The most important user response's are saved here
 			var response = {
