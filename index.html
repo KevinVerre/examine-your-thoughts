@@ -134,8 +134,8 @@
 				},
 				{
 					"id": "thought",
-					"prompt": "Write a thought about '#{NOUN}' and how you feel about it. ('#{FEELING}')",
-					"hint": "Examples: My work is intimidating, My girlfriend is frustrating, Doing laundry is boring, My future is horrible, Learning that skill is too hard",
+					"prompt": "Write a thought about '#{NOUN}' and how you feel about it or why you feel that way. ('#{FEELING}')",
+					"hint": "Example: '#{NOUN}' is making me feel '#{FEELING}' because ________ .",
 					"response": "",
 					"response_handler": "save_thought_response",
 					"result_tag": "Stressful thought"
@@ -167,7 +167,7 @@
 				{
 					"id": "without",
 					"prompt": "Who would you be without the thought '#{THOUGHT}'?<sup><em>*</em></sup>",
-					"hint": "How would you react? (This is my favorite step.)",
+					"hint": "How would you react WITHOUT the thought? (This is my favorite step.)",
 					"response": "",
 					"response_handler": "",
 					"result_tag": "Without"
@@ -175,7 +175,7 @@
 					{
 					"id": "treat",
 					"prompt": "How do you treat '#{NOUN}' when you think '#{THOUGHT}'?<sup><em>*</em></sup>",
-					"hint": "And how do you treat yourself?",
+					"hint": "And how do you treat yourself? How would you treat things differently without this thought?",
 					"response": "",
 					"response_handler": "",
 					"result_tag": "Behavior"
