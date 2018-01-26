@@ -207,7 +207,7 @@
 				{
 					"id": "drop",
 					"prompt": "Can you see a reason to drop the thought '#{THOUGHT}'?<sup><em>*</em></sup>",
-					"hint": "",
+					"hint": "What is that reason?",
 					"response": "",
 					"response_handler": "",
 					"result_tag": "Drop thought"
@@ -215,7 +215,7 @@
 				{
 					"id": "turnaround_self",
 					"prompt": "How can you turn the thought around to YOURSELF?<sup><em>*</em></sup>",
-					"hint": "Instead of ABC does XYZ, how do YOU do XYZ?",
+					"hint": "Instead of ABC does XYZ, how do YOU do XYZ? ('#{THOUGHT}')",
 					"response": "",
 					"response_handler":"",
 					"result_tag":"Turnaround (self)"
@@ -223,7 +223,7 @@
 				{
 					"id": "turnaround_other",
 					"prompt": "How can you turn the thought around the OTHER WAY?<sup><em>*</em></sup>",
-					"hint": "Instead of ABC does XYZ to me, how do YOU do XYZ to ABC?",
+					"hint": "Instead of ABC does XYZ to me, how do YOU do XYZ to ABC? ('#{THOUGHT}')",
 					"response": "",
 					"response_handler":"",
 					"result_tag":"Turnaround (other)"
@@ -231,11 +231,12 @@
 				{
 					"id": "turnaround_opposite",
 					"prompt": "How can you turn the thought around to the OPPOSITE?<sup><em>*</em></sup>",
-					"hint": "Instead of ABC does/is XYZ, how is the opposite true? ABC does/is NOT XYZ",
+					"hint": "Instead of ABC is/does XYZ, how is the opposite true? ABC is/does NOT XYZ. ('#{THOUGHT}')",
 					"response": "",
 					"response_handler":"",
 					"result_tag":"Turnaround (opposite)"
 				},
+				/*
 				{
 					"id": "turnaround",
 					"prompt": "What are some of the turnarounds?<sup><em>*</em></sup> (for '#{THOUGHT}')",
@@ -244,7 +245,9 @@
 					"response_handler": "",
 					"result_tag": "Turnarounds"
 				},
-				/*{
+				*/
+				/*
+				{
 					"id": "false",
 					"prompt": "What are THREE REASONS why '#{THOUGHT}' is false?",
 					"hint": "",
@@ -259,7 +262,8 @@
 					"response": "",
 					"response_handler": "",
 					"result_tag": "Turn around towards self"
-				}, */
+				},
+				*/
 				{
 					"id": "advice",
 					"prompt": "What advice would you give yourself regarding '#{NOUN}'?",
