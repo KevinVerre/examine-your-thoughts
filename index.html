@@ -114,7 +114,7 @@
 					"hint": "Examples: 'My boss', 'My roommate', 'My girlfriend', 'My project', 'My chore', 'My future', 'My career'",
 					"response": "",
 					"response_handler": "save_noun_response",
-					"result_tag": "Thing bothering you"
+					"result_tag": "The Thing:"
 				},
 				{
 					"id": "premeasure",
@@ -122,7 +122,7 @@
 					"hint": "On a scale of 1-10, (10 is extremely upsetting, 1 is only a tiny bit upsetting)",
 					"response": "",
 					"response_handler": "",
-					"result_tag":"How upset"
+					"result_tag": "How upset"
 				},
 				{
 					"id": "feel",
@@ -130,7 +130,7 @@
 					"hint": "Examples: Hopeless, intimidated, frustrated, angry, scared, unmotivated, uninterested, upset",
 					"response": "",
 					"response_handler": "save_feeling_response",
-					"result_tag": "Feeling"
+					"result_tag": "The Feeling"
 				},
 				{
 					"id": "thought",
@@ -211,6 +211,14 @@
 					"response": "",
 					"response_handler": "",
 					"result_tag": "Drop thought"
+				},
+				{
+					"id": "keep",
+					"prompt": "Can you see a STRESS-FREE reason to keep the thought '#{THOUGHT}'?<sup><em>*</em></sup>",
+					"hint": "What is that reason?",
+					"response": "",
+					"response_handler": "",
+					"result_tag": "Keep thought"
 				},
 				{
 					"id": "turnaround_self",
@@ -294,7 +302,15 @@
 					"hint": "",
 					"response": "",
 					"response_handler": "",
-					"result_tag": "Feeling"
+					"result_tag": "Feeling after"
+				},
+				{
+					"id": "next",
+					"prompt": "What's another thought you could examine next? What belief lead you to believe this one?",
+					"hint": "What other thoughts should you examine next?",
+					"response": "",
+					"response_handler": "",
+					"result_tag": "Next"
 				},
 				{
 					"id": "end",
