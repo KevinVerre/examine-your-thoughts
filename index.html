@@ -114,7 +114,7 @@
 					"hint": "Examples: 'My boss', 'My roommate', 'My girlfriend', 'My project', 'My chore', 'My future', 'My career'",
 					"response": "",
 					"response_handler": "save_noun_response",
-					"result_tag": "The Thing:"
+					"result_tag": "The Thing"
 				},
 				{
 					"id": "premeasure",
@@ -175,10 +175,18 @@
 					{
 					"id": "treat",
 					"prompt": "How do you treat '#{NOUN}' when you think '#{THOUGHT}'?<sup><em>*</em></sup>",
-					"hint": "And how do you treat yourself? How would you treat things differently without this thought?",
+					"hint": "And how do you treat yourself?",
 					"response": "",
 					"response_handler": "",
 					"result_tag": "Behavior"
+				},
+					{
+					"id": "treat_without",
+					"prompt": "How would you treat '#{NOUN}' WITHOUT the thought '#{THOUGHT}'?<sup><em>*</em></sup>",
+					"hint": "How would you treat yourself WITHOUT this thought?",
+					"response": "",
+					"response_handler": "",
+					"result_tag": "Behavior without"
 				},
 				{
 					"id": "envision",
