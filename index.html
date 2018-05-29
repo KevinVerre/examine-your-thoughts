@@ -53,12 +53,13 @@
 				{
 					"id":"true",
 					"prompt":"Is it true?<sup><em>*</em></sup>",
-					"hint":"",
+					"hint":"Be honest! If you think it is true, say Yes!",
 					"result_tag":"True?"
 				},
 				{
 					"id":"absolutely",
 					"prompt":"Can you be absolutely sure it is true?<sup><em>*</em></sup>",
+					"hint":"Be honest! Resist the urge to say No if it isn't really true.",
 					"result_tag":"Absolutely?"
 				},
 				{
@@ -154,7 +155,7 @@
 				{
 					"id": "absolutely",
 					"prompt": "'#{THOUGHT}' ...Can you absolutely be sure it is true?<sup><em>*</em></sup>",
-					"hint": "Can you prove that it's true? Is it <em>even possible</em> to prove that it's true? Why or why not?",
+					"hint": "Can you prove that it's true? Is it <em>even possible</em> to prove that it's true? Why or why not? Be honest if it's a Yes.",
 					"response": "",
 					"response_handler": "",
 					"result_tag": "Absolutely true"
@@ -306,6 +307,13 @@
 					"response": "",
 					"response_handler": "",
 					"result_tag": "Bothers me"
+				},
+				{
+					"id":"bothers_you_more",
+					"prompt": "What is bothering you more right now, '#{NOUN}' or your thinking?",
+					"hint": "Your thoughts, beliefs, feelings, emotions regarding it",
+					"response": "",
+					"result_tag": "Problem"
 				},
 				{
 					"id": "postmeasure",
