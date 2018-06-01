@@ -139,7 +139,7 @@
 				{
 					"id": "thought",
 					"prompt": "Write a thought about '#{NOUN}' and how you feel about it or why you feel that way. ('#{FEELING}')",
-					"hint": "Example: '#{NOUN}' is making me feel '#{FEELING}' because ________ .",
+					"hint": "What are you thinking about it?<br/>Example: '#{NOUN}' is making me feel '#{FEELING}' because ________ .",
 					"response": "",
 					"response_handler": "save_thought_response",
 					"result_tag": "Stressful thought"
@@ -209,14 +209,6 @@
 					"result_tag": "Envision without"
 				},
 				{
-					"id":"why",
-					"prompt": "Why do you think '#{NOUN}' is the way it currently is?",
-					"hint": "Can you give an explanation?",
-					"response": "",
-					"response_handler": "",
-					"result_tag": "Why"
-				},
-				{
 					"id": "drop",
 					"prompt": "Can you see a reason to stop believing the thought '#{THOUGHT}'?<sup><em>*</em></sup>",
 					"hint": "What is that reason?",
@@ -225,12 +217,28 @@
 					"result_tag": "Drop thought"
 				},
 				{
+					"id":"why",
+					"prompt": "Why do you think '#{NOUN}' is the way it currently is?",
+					"hint": "Can you give an explanation?",
+					"response": "",
+					"response_handler": "",
+					"result_tag": "Why"
+				},
+				{
 					"id": "keep",
 					"prompt": "Can you see a STRESS-FREE reason to keep believing the thought '#{THOUGHT}'?<sup><em>*</em></sup>",
 					"hint": "What is that reason?",
 					"response": "",
 					"response_handler": "",
 					"result_tag": "Keep thought"
+				},
+				{
+					"id": "turnaround_opposite",
+					"prompt": "How can you turn the thought around to the OPPOSITE?<sup><em>*</em></sup>",
+					"hint": "Instead of ABC is/does XYZ, how is the opposite true? ABC is/does NOT XYZ. What is the counter-evidence? ('#{THOUGHT}')",
+					"response": "",
+					"response_handler":"",
+					"result_tag":"Turnaround (opposite)"
 				},
 				{
 					"id": "turnaround_self",
@@ -247,14 +255,6 @@
 					"response": "",
 					"response_handler":"",
 					"result_tag":"Turnaround (other)"
-				},
-				{
-					"id": "turnaround_opposite",
-					"prompt": "How can you turn the thought around to the OPPOSITE?<sup><em>*</em></sup>",
-					"hint": "Instead of ABC is/does XYZ, how is the opposite true? ABC is/does NOT XYZ. ('#{THOUGHT}')",
-					"response": "",
-					"response_handler":"",
-					"result_tag":"Turnaround (opposite)"
 				},
 				/*
 				{
