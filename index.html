@@ -361,10 +361,21 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 				}
 			];
 
+			//jQuery doesn't come with this function so I found it online, made it bettr
+			$.urlParam = function(name){
+				var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+				if (results == null) return "";
+				return results[1] || "";
+			}
+
+			let current_question_set = $.urlParam('question_set')
+
 			const SHORT_LIST = "short-list";
 			const LONG_LIST = "long-list";
 			// This must both be changed.
 			var steps_str = LONG_LIST; // This determines which one it starts with
+
+			if (current_question_set == "short") { steps_str = SHORT_LIST; }
 
 			var steps;
 			if (steps_str == SHORT_LIST) { // DO NOT change this one
@@ -381,6 +392,17 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 			};
 
 			function swap_question_set(){
+				// is this considered safe? I could do it another way by manipulating the URL in the browser but that's more complicated
+				var URL_to_go_to = $(location).attr('href');
+				URL_to_go_to = URL_to_go_to.split("?")[0];
+				if (steps_str == LONG_LIST){
+					URL_to_go_to += "?question_set=short";
+				} else if (steps_str == SHORT_LIST) {
+					URL_to_go_to += "?question_set=long";
+				}
+				window.location = URL_to_go_to;
+			}
+			function swap_question_set_old(){
 				// if we are short, become long. If we are long, become short.
 				if (steps_str == SHORT_LIST) {
 					steps_str = LONG_LIST;
