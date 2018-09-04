@@ -49,7 +49,7 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 				{
 					"id": "welcome",
 					"prompt": "<h5><em>ExamineYourThoughts.com</em></h5>Welcome! I will ask you some helpful questions.",
-					"hint": "Are you upset, angry, unmotivated, or worried about something?<br/>These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. <em>(Click Button or Press Enter to submit)</em><br/><br/><i>This is the shorter version.<br>It only asks the most important questions. You can try the other question set if you like.</i>",
+					"hint": "Are you upset, angry, unmotivated, or worried about something?<br/>These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. <em>(Click Button or Press Enter to submit)</em><br/><br/><i>This is the shorter version.<br>It only asks the most important questions. You can try the longer question set if you like.</i>",
 					"response": "",
 					"response_handler": "handle_initial_response",
 					"result_tag": ""
@@ -119,7 +119,7 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 				{
 					"id": "welcome",
 					"prompt": "<h5><em>ExamineYourThoughts.com</em></h5>Welcome! I will ask you some helpful questions.",
-					"hint": "Are you upset, angry, unmotivated, or worried about something?<br/>These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. <em>(Click Button or Press Enter to submit)</em><br/><br/><i>This is the full version.<br>It asks all questions. You can try the other question set if you like.</i>",
+					"hint": "Are you upset, angry, unmotivated, or worried about something?<br/>These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. <em>(Click Button or Press Enter to submit)</em><br/><br/><i>This is the full version.<br>It asks all questions. You can try the shorter question set if you like.</i>",
 					"response": "",
 					"response_handler": "handle_initial_response",
 					"result_tag": ""
@@ -286,7 +286,7 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 					"response": "",
 					"response_handler": "",
 					"result_tag": "Arguments against the thought"
-				}, 
+				},
 				{
 					"id": "myself",
 					"prompt": "What are THREE WAYS in which I am somehow causing the feeling '#{FEELING}' to occur? Or how do your thoughts cause you to feel that way?",
@@ -370,18 +370,29 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 
 			let current_question_set = $.urlParam('question_set')
 
+			var try_shorter_text = "Try the shorter set of questions"
+			var try_longer_text = "Try the longer set of questions"
+
 			const SHORT_LIST = "short-list";
 			const LONG_LIST = "long-list";
 			// This must both be changed.
 			var steps_str = LONG_LIST; // This determines which one it starts with
 
-			if (current_question_set == "short") { steps_str = SHORT_LIST; }
+			if (current_question_set == "short")
+				{ steps_str = SHORT_LIST; }
+			else {
+				steps_str = LONG_LIST
+			}
 
 			var steps;
+			var question_button_set_text;
+
 			if (steps_str == SHORT_LIST) { // DO NOT change this one
 				steps = short_list_of_questions;
+				question_button_set_text = try_longer_text;
 			} else {
 				steps = long_list_of_questions;
+				question_button_set_text = try_shorter_text;
 			}
 
 			// The most important user response's are saved here
@@ -390,6 +401,11 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 				"feeling": "",
 				"thought": ""
 			};
+
+			function swap_question_set_button_text(text){
+				var button = $('#swap-question-set-btn');
+				button.attr('value', text);
+			}
 
 			function swap_question_set(){
 				// is this considered safe? I could do it another way by manipulating the URL in the browser but that's more complicated
@@ -525,13 +541,14 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 
 			// INITIALIZE function
 			function onload_initialize(){
+				swap_question_set_button_text(question_button_set_text);
 				display_first_question();
 			}
 
 			function display_first_question(){
 
 				// attach Enter key handler and hide, it starts out hidden
-				$('#response_textarea').hide(); 
+				$('#response_textarea').hide();
 
 				total_number_steps = steps.length;
 				current_step_number = 0;
@@ -541,7 +558,7 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 				$('#submit_button').focus();
 				$('#response_textarea').on('keypress', enter_key_handler);
 				$('#response_textarea').on('keyup', textarea_keyup);
-				
+
 				// Disabled to improve user experience
 				//$('body').on('keyup', keyup_backarrow_key_handler);
 
@@ -567,7 +584,7 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 					question += " // " + xstep.hint;
 					// Regex to clean up the text. Remove the HTML < > tags
 					// The question mark is lazy matching rather than greedy matching
-					question = question.replace(/<.*?>/g, ' '); 
+					question = question.replace(/<.*?>/g, ' ');
 					console.log(question);
 					x++;
 				}
@@ -647,7 +664,7 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 				}
 			}
 
-			// a.k.a. Next question function 
+			// a.k.a. Next question function
 			function submit_response_handler(){
 				if (next_question_flag || current_step_number >= total_number_steps) {
 					// do nothing. We can't go to the next question yet
@@ -674,7 +691,7 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 				}
 				next_step = steps[current_step_number];
 				display_step(next_step, current_step_number);
-				
+
 				if (current_step_number >= total_number_steps - 1) {
 					// End by displaying the last question but hiding the text box and submit button
 					//print_all_results(); // debug
@@ -728,9 +745,11 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 				}
 			}
 
+			$(document).ready(onload_initialize);
+
 		</script>
 	</head>
-	<body onload="onload_initialize();">
+	<body onload="">
 
 		<div class="jumbotron pink-jumbotron" id="jumbotron" style="">
 			<div id="prompt_container" class="container">
@@ -746,7 +765,7 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 				<div class="row">
 					<textarea id="response_textarea" rows="3" style="width:50%;"></textarea>
 				</div>
-				
+
 				<div class="row">
 					<input id="submit_button" type="button" value="Next/Submit response" onclick="submit_button_click_handler();" class="btn btn-primary"/>
 				</div>
@@ -778,7 +797,7 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 			<div class="row">
 				<input type="button" value="Try the other set of questions" id="swap-question-set-btn" onclick="swap_question_set();" class="btn-default btn-sm" style="margin-bottom:4px;"/>
 			</div>
-			
+
 			<div class="row"><div class="text-small small"><em>Your answers are private and are not saved anywhere.</em></div></div>
 			<div class="row"><div class="text-small small">Website code and text by Kevin Verre.</div></div>
 			<div class="row"><div class="text-small small">
