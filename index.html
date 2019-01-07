@@ -25,17 +25,18 @@
 				background-color: #a9d1ff;
 				border-color: blue;
 			}
-
-			.pink-jumbotron{
-				background-color: #ffe0e5; margin-bottom: 15px; padding-top: 32px; padding-bottom: 32px;
-				//border-bottom: 1px solid #eeeeee;
-
+			.pink-bg {
+				background-color: #ffe0e5;
 				background: rgb(255,230,234);
 				background: linear-gradient(180deg, rgba(255,230,234,1) 0%, rgba(255,224,229,1) 80%, rgba(244,214,219,1) 100%);
-
 				-webkit-box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
--moz-box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
-box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
+				-moz-box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
+				box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
+			}
+			.custom-jumbotron {
+				margin-bottom: 15px;
+				padding-top: 32px;
+				padding-bottom: 32px;
 			}
 		</style>
 
@@ -759,7 +760,7 @@ box-shadow: 1px 5px 5px 0px rgba(184,184,184,0.65);
 	</head>
 	<body onload="">
 
-		<div class="jumbotron pink-jumbotron" id="jumbotron" style="">
+		<div class="jumbotron custom-jumbotron pink-bg" id="jumbotron" style="">
 			<div id="prompt_container" class="container">
 				<div class="row">
 					<div>
