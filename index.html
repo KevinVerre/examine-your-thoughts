@@ -591,7 +591,8 @@
 
 			function display_step(step, current_step_number){
 				// display an empty input
-				$('#response_textarea').val('').focus();
+				const next_question_initial_response_value = step.response || '';
+				$('#response_textarea').val(next_question_initial_response_value).focus();
 				// display the prompt
 				prepped_prompt = prep_string(step.prompt);
 				$('#prompt_text').html(prepped_prompt);
@@ -828,6 +829,11 @@
 				if (current_step_number <= 0){
 					return; // do nothing
 				}
+				// store the currently entered text
+				cur_step = steps[current_step_number];
+				user_response = $('#response_textarea').val().trim();
+				cur_step.response = user_response || "";
+				// Display the previous step
 				current_step_number -= 1;
 				step_to_display = steps[current_step_number];
 				old_response = step_to_display.response || "";
