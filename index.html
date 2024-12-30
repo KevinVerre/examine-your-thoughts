@@ -211,7 +211,7 @@
 					"hint": "Imagine someone else was in this situation and going to you for help. What would you say to them?",
 					"response": "",
 					"response_handler": "",
-					"result_tag": "OtherAdvice"
+					"result_tag": "Other Advice"
 				},
 				{
 					"id": "you_can",
@@ -227,15 +227,15 @@
 					"hint": "Imagine talking to yourself and giving yourself advice.",
 					"response": "",
 					"response_handler": "",
-					"result_tag": "SelfAdvice"
+					"result_tag": "Advice to Self"
 				},
 				{
-					"id": "criticism_response",
-					"prompt": "Imagine that your Negative Thought was another person and they are criticizing you. How would you respond to their criticism?",
-					"hint": "Imagine that the Negative Thought believes 100% in your negative thought. For example, if your negative thought was 'It will be difficult and I will be miserable' then imagine someone telling you: 'It will be difficult and you will be miserable.' How could you respond?",
+					"id": "respond_to_other_negativity",
+					"prompt": "Imagine that someone else believed that your Negative Thought was true for you. They heard your negative thought and they agreed with it. Now they are saying it to you. How would you respond to their negativity (or their criticism)?",
+					"hint": "Imagine another person believes your negative thought about you and your situation, not necessarily about their own situation. If your thought contains a first-person perspective, you will need to re-write the negative thought from someone else's perspective about you. For example, if your negative thought was 'It will be difficult and I will be miserable' then the other person saying it towards you would be: 'It will be difficult and you will be miserable.' How could you respond? Your thought: '#{THOUGHT}'",
 					"response": "",
 					"response_handler": "",
-					"result_tag": "Criticism Response"
+					"result_tag": "Respond to Negativity"
 				},
 				{
 					"id": "worst",
@@ -320,7 +320,7 @@
 				{
 					"id": "black-or-white",
 					"prompt": "Is it an example of black-or-white when thinking in shades of grey would be more appropriate? '#{THOUGHT}'",
-					"hint": "",
+					"hint": "Try re-writing your negative thought to be more accurate by describing things on a scale of 0 to 100",
 					"response": "",
 					"response_handler": "",
 					"result_tag": "Black or white"
@@ -336,7 +336,7 @@
 				{
 					"id": "labeling",
 					"prompt": "Is it an example of labeling or mislabeling? '#{THOUGHT}'",
-					"hint": "",
+					"hint": "How do you define those labels?",
 					"response": "",
 					"response_handler": "",
 					"result_tag": "Labeling"
@@ -950,7 +950,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div id="hint_text" class="text-left h4">The Hint text will be displayed here if the JavaSript runs correctly. But the JavaScript wasn't executed correctly.</div>
+					<div id="hint_text" class="text-left h5">The Hint text will be displayed here if the JavaSript runs correctly. But the JavaScript wasn't executed correctly.</div>
 				</div>
 
 				<div class="row">
