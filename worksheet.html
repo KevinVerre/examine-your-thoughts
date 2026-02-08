@@ -1,0 +1,1410 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Examine Your Thoughts — Worksheet</title>
+
+  <style>
+    /* =========================================================
+       Screen (nice + usable) + Print (black/white + compact)
+       Pure HTML/CSS. No JS.
+       ========================================================= */
+
+    :root{
+      --ink: #111;
+      --muted: #444;
+      --faint: #666;
+      --border: #d8d8d8;
+      --paper: #fff;
+      --bg: #f6f7fb;
+
+      --maxw: 980px;
+      --radius: 12px;
+      --shadow: 0 10px 26px rgba(0,0,0,0.08);
+
+      --fs-prompt: 15px;
+      --fs-hint: 13px;
+      --fs-meta: 12px;
+      --fs-input: 14px;
+
+      --pad-card: 14px;
+      --gap: 12px;
+    }
+
+    html, body { height: 100%; }
+    body{
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.3;
+    }
+
+    .page{
+      max-width: var(--maxw);
+      margin: 22px auto 48px;
+      padding: 0 16px;
+    }
+
+    ol.questions{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: var(--gap);
+    }
+
+    .q{
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .q-inner{
+      padding: var(--pad-card);
+    }
+
+    .q-head{
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .q-num{
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      font-size: 14px;
+      color: #222;
+      background: #f3f4f6;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: 36px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .prompt{
+      margin: 0;
+      font-size: var(--fs-prompt);
+      font-weight: 650;
+      letter-spacing: -0.01em;
+    }
+
+    /* The first prompt includes its own <h5> etc */
+    .prompt h5{
+      margin: 0 0 6px 0;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .hint{
+      margin: 8px 0 0;
+      font-size: var(--fs-hint);
+      color: var(--muted);
+    }
+
+    .answer-block{
+      margin-top: 10px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .answer-label{
+      font-size: 11px;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .answer-label span{
+      text-transform: none;
+      letter-spacing: normal;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    textarea.answer-input{
+      width: 100%;
+      box-sizing: border-box;
+      resize: vertical;
+      min-height: 86px; /* screen-friendly */
+      padding: 10px 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font: inherit;
+      font-size: var(--fs-input);
+      line-height: 1.35;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    textarea.answer-input:focus{
+      outline: 2px solid #94a3b8;
+      outline-offset: 2px;
+      border-color: #94a3b8;
+    }
+
+    @media (max-width: 860px){
+      .page{ padding: 0 12px; }
+    }
+
+    /* =========================================================
+       PRINT MODE: black/white, minimal ink, very compact
+       Target: ~5 pages by increasing columns + shrinking whitespace.
+       ========================================================= */
+    @page{
+      margin: 0.32in;
+    }
+
+    @media print{
+      :root{
+        --bg: #fff;
+        --paper: #fff;
+        --shadow: none;
+        --border: #000;
+        --muted: #000;
+        --faint: #000;
+
+        /* smaller typography for density */
+        --fs-prompt: 9.2pt;
+        --fs-hint: 7.6pt;
+        --fs-meta: 7.5pt;
+        --fs-input: 9pt;
+
+        --pad-card: 6px;
+        --gap: 6px;
+      }
+
+      body{
+        background: #fff !important;
+        color: #000 !important;
+      }
+
+      .page{
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* 3 columns: biggest win for page count */
+      ol.questions{
+        display: block;
+        column-count: 3;
+        column-gap: 0.22in;
+        margin-top: 0;
+      }
+
+      .q{
+        box-shadow: none !important;
+        border: 1px solid #000;
+        border-radius: 0;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin: 0 0 var(--gap) 0;
+      }
+
+      .q-inner{
+        padding: var(--pad-card);
+      }
+
+      .q-head{
+        grid-template-columns: 28px 1fr;
+        gap: 6px;
+      }
+
+      .q-num{
+        background: #fff;
+        border: 1px solid #000;
+        border-radius: 0;
+        width: 24px;
+        height: 18px;
+        font-size: 8.5pt;
+        margin-top: 0;
+      }
+
+      .prompt{
+        line-height: 1.12;
+      }
+
+      .prompt h5{
+        font-size: 7.5pt;
+        margin: 0 0 2px 0;
+        letter-spacing: 0.04em;
+      }
+
+      .hint{
+        margin-top: 3px;
+        line-height: 1.08;
+      }
+
+      /* Requirement #3: do NOT show "Your answer" in print */
+      .answer-label{
+        display: none !important;
+      }
+
+      .answer-block{
+        margin-top: 5px;
+        gap: 0;
+      }
+
+      /* Requirement #2: smaller answer boxes in print
+         - default: ~1.2 lines
+         - change height to 2.2em if you want ~2 lines
+      */
+  textarea.answer-input{
+    /* Make it behave like a plain box the print engine won’t “theme” */
+    -webkit-appearance: none;
+    appearance: none;
+
+    box-sizing: border-box;
+    width: 100%;
+
+    /* Compact size */
+    margin: 0;
+    padding: 0 0.06in;          /* tiny left/right so text isn’t on the edge */
+    min-height: 0;
+    height: 1.25em;             /* ~1 line */
+    resize: none;
+
+    /* Printer-friendly “always white + black” */
+    background-color: #fff !important;
+    color: #000 !important;
+
+    /* Optional: give it a faint outline so the field is visible */
+    border: 1px solid #000;
+    border-radius: 0;
+    outline: none;
+
+    font: inherit;
+    font-size: var(--fs-input);
+    line-height: 1.15;
+
+    /* Handwriting guide lines (will print if backgrounds are allowed) */
+    background-image: linear-gradient(
+      to bottom,
+      transparent 1.05em,
+      #000 1.05em,
+      #000 1.08em,
+      transparent 1.08em
+    ) !important;
+    background-size: 100% 1.25em !important;
+    background-repeat: repeat-y !important;
+
+    /* Encourage browsers to actually print the background lines */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* In case the environment uses forced/high-contrast colors */
+  @media (forced-colors: active) {
+    textarea.answer-input{
+      forced-color-adjust: none;
+      background: #fff !important;
+      color: #000 !important;
+      border: 1px solid #000;
+      background-image: none !important; /* guide lines may be overridden anyway */
+    }
+  }
+
+
+      /* Extra: avoid printing focus outlines */
+      textarea.answer-input:focus{
+        outline: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <ol class="questions">
+      <!-- 1 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">1</div>
+            <div>
+              <div class="prompt">
+                <h5><em>ExamineYourThoughts.com</em></h5>
+                Welcome! I will ask you some helpful questions.
+              </div>
+              <div class="hint">
+                Are you upset, angry, unmotivated, or worried about something?<br/>
+                These questions are designed to help you worry less about something in your life, and to motivate you.<br/>
+                Please submit anything to continue. <em>(Click Button or Press Enter to submit)</em><br/><br/>
+                <i>This is the full version.<br/>It asks all questions. You can try the shorter question set if you like.</i>
+              </div>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-welcome">Your answer <span>(type here)</span></label>
+            <textarea class="answer-input" id="a-welcome" name="welcome" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 2 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">2</div>
+            <div>
+              <p class="prompt">What is the noun (person, thing, or event) that is causing you stress?</p>
+              <p class="hint">Examples: 'My boss', 'My roommate', 'My girlfriend', 'My project', 'My chore', 'My future', 'My career'</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-noun">Your answer <span>(be specific)</span></label>
+            <textarea class="answer-input" id="a-noun" name="noun" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 3 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">3</div>
+            <div>
+              <p class="prompt">How upsetting is '#{NOUN}' to you?</p>
+              <p class="hint">On a scale of 1-10, (10 is extremely upsetting, 1 is only a tiny bit upsetting)</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-premeasure">Your answer <span>(1–10 + notes)</span></label>
+            <textarea class="answer-input" id="a-premeasure" name="premeasure" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 4 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">4</div>
+            <div>
+              <p class="prompt">How do you FEEL when you think about '#{NOUN}'? How does it make you feel?</p>
+              <p class="hint">Examples: hopeless, overwhelmed, depressed, tired, bored, distracted, intimidated, frustrated, angry, scared, unmotivated, uninterested, uninspired, upset, challenged, stressed, anxious, reluctant, lazy, hesitant, lethargic, avoidant, averse</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-feel">Your answer <span>(one word or a few)</span></label>
+            <textarea class="answer-input" id="a-feel" name="feel" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 5 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">5</div>
+            <div>
+              <p class="prompt">Write a thought about '#{NOUN}' and how you feel about it or why you feel that way. ('#{FEELING}')</p>
+              <p class="hint">What are you thinking about it?<br/>Example: '#{NOUN}' is making me feel '#{FEELING}' because ________ .</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-thought">Your answer <span>(a full sentence is great)</span></label>
+            <textarea class="answer-input" id="a-thought" name="thought" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 6 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">6</div>
+            <div>
+              <p class="prompt">'#{THOUGHT}' ...Is it true?<sup><em>*</em></sup></p>
+              <p class="hint">Be honest! It's OK to say <em>Yes</em> if you feel it is true to you right now. It doesn't matter if you say <em>Yes</em> or <em>No</em>.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-true">Your answer <span>(Yes / No + why)</span></label>
+            <textarea class="answer-input" id="a-true" name="true" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 7 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">7</div>
+            <div>
+              <p class="prompt">'#{THOUGHT}' ...Can you absolutely be sure it is true?<sup><em>*</em></sup></p>
+              <p class="hint">Can you prove that it's true? Is it <em>even possible</em> to prove that it's true? Why or why not? Be honest if it's a Yes.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-absolutely">Your answer <span>(evidence, certainty)</span></label>
+            <textarea class="answer-input" id="a-absolutely" name="absolutely" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 8 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">8</div>
+            <div>
+              <p class="prompt">How do you react when you believe '#{THOUGHT}'?<sup><em>*</em></sup></p>
+              <p class="hint">What do you do? What actions do you take? How do you feel?<br/>Examples: I get scared, I procrastinate, I wish..., I avoid dealing with it or thinking about it</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-react">Your answer <span>(actions + emotions)</span></label>
+            <textarea class="answer-input" id="a-react" name="react" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 9 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">9</div>
+            <div>
+              <p class="prompt">Who would you be if you didn't believe the thought '#{THOUGHT}'?<sup><em>*</em></sup></p>
+              <p class="hint">Without the thought, what would you do? What would you be doing? What action would you take? How would you feel? How would you be different? How would you treat the situation differently? (This is my favorite step.)</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-without">Your answer <span>(imagine a freer you)</span></label>
+            <textarea class="answer-input" id="a-without" name="without" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 10 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">10</div>
+            <div>
+              <p class="prompt">What are some of the turnarounds?<sup><em>*</em></sup> (for '#{THOUGHT}')</p>
+              <p class="hint">A turnaround is where you rephrase the thought toward yourself or towards the opposite in a way that you believe is more true</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-turnaround">Your answer <span>(list a few)</span></label>
+            <textarea class="answer-input" id="a-turnaround" name="turnaround" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 11 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">11</div>
+            <div>
+              <p class="prompt">With regard to '#{NOUN}', what kind of person do you want to be?</p>
+              <p class="hint">How do you want other people to think of you? How do you want to be remembered? What would your role model do? What are you rooting for yourself to do?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-kind_of_person">Your answer <span>(values, identity)</span></label>
+            <textarea class="answer-input" id="a-kind_of_person" name="kind_of_person" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 12 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">12</div>
+            <div>
+              <p class="prompt">Imagine you had a child in this exact same situation, what would you want them to do with regards to this situation?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-child">Your answer <span>(gentle guidance)</span></label>
+            <textarea class="answer-input" id="a-child" name="child" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 13 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">13</div>
+            <div>
+              <p class="prompt">What would you say to a friend of yours in a similar situation?</p>
+              <p class="hint">How would you react if you believed what you would say to a friend instead of what you originally thought?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-what_to_say_to_friend">Your answer <span>(what you’d tell them)</span></label>
+            <textarea class="answer-input" id="a-what_to_say_to_friend" name="what_to_say_to_friend" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 14 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">14</div>
+            <div>
+              <p class="prompt">Take the original thought: '#{THOUGHT}'. Would you say something like that original thought to someone else if they were in a similar situation?</p>
+              <p class="hint">Why or why not? Would it be rude? Mean? Discouraging? Untruthful? Unfriendly?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-would_you_say_to_friend">Your answer <span>(Yes/No + why)</span></label>
+            <textarea class="answer-input" id="a-would_you_say_to_friend" name="would_you_say_to_friend" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 15 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">15</div>
+            <div>
+              <p class="prompt">Suppose that '#{THOUGHT}' is true.... what is the rest of the story? What's the full story? What else is true about #{NOUN}?</p>
+              <p class="hint">Is there another side to this story? Is there another half of the story? Is there a part you're not focusing on? What are you leaving out, forgetting, or missing?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-fullStory">Your answer <span>(add missing context)</span></label>
+            <textarea class="answer-input" id="a-fullStory" name="fullStory" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 16 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">16</div>
+            <div>
+              <p class="prompt">Is thinking '#{THOUGHT}' helping you? Or is it keeping you stuck? Or is it hurting you?</p>
+              <p class="hint">How is it helping you? Or how is it keeping you stuck? Or how is it hurting you?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-helpful">Your answer <span>(impact on you)</span></label>
+            <textarea class="answer-input" id="a-helpful" name="helpful" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 17 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">17</div>
+            <div>
+              <p class="prompt">Spend five minutes taking small steps to improve the situation regarding #{NOUN}. What did you do during those 5 minutes and how did it go?</p>
+              <p class="hint">Set a five minute timer. If necessary, you could try to write out a list of small steps you could take during those five minutes.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-fiveMinutes">Your answer <span>(what you did + outcome)</span></label>
+            <textarea class="answer-input" id="a-fiveMinutes" name="fiveMinutes" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 18 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">18</div>
+            <div>
+              <p class="prompt">Is believing the thought '#{THOUGHT}' costing you?</p>
+              <p class="hint">What has this belief cost you in the past? In the present? In the future?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-cost">Your answer <span>(time, energy, opportunities)</span></label>
+            <textarea class="answer-input" id="a-cost" name="cost" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 19 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">19</div>
+            <div>
+              <p class="prompt">Would you say '#{THOUGHT}' to your younger self?</p>
+              <p class="hint">Why or why not? What about to your older self? To your present self?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-youngerself">Your answer <span>(how you’d speak to you)</span></label>
+            <textarea class="answer-input" id="a-youngerself" name="youngerself" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 20 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">20</div>
+            <div>
+              <p class="prompt">How could you improve this situation IN A HURRY?</p>
+              <p class="hint">Imagine you only had one hour. Or one day. NOT one week. NOT one year. Maybe you would be better off getting stuff done QUICKLY rather than perfectly.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-hurry">Your answer <span>(fast, doable steps)</span></label>
+            <textarea class="answer-input" id="a-hurry" name="Hurry" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 21 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">21</div>
+            <div>
+              <p class="prompt">Does this thought say anything positive about your character? '#{THOUGHT}'</p>
+              <p class="hint">What do you like about yourself that is reflected in this thought/belief?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-positive_character">Your answer <span>(strengths underneath)</span></label>
+            <textarea class="answer-input" id="a-positive_character" name="positive_character" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 22 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">22</div>
+            <div>
+              <p class="prompt">How could you become more knowledgeable about the subject? '#{THOUGHT}'</p>
+              <p class="hint">Are there mentors, teachers, coaches, friends, guides that you could learn from? What knowledge are you missing? You don't even know what you all you don't know.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-knowledge">Your answer <span>(who/what could teach you)</span></label>
+            <textarea class="answer-input" id="a-knowledge" name="knowledge" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 23 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">23</div>
+            <div>
+              <p class="prompt">How could you switch up your strategy with regard to the subject? '#{THOUGHT}'</p>
+              <p class="hint">What strategies could you try that you haven't tried yet? Don't be afraid to brainstorm and take bold action.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-strategy">Your answer <span>(new approaches)</span></label>
+            <textarea class="answer-input" id="a-strategy" name="Strategy" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 24 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">24</div>
+            <div>
+              <p class="prompt">Imagine someone else had this thought. How could you empathize with them? '#{THOUGHT}'</p>
+              <p class="hint">The more completely can empathize with them, the better. Tell them that you realize how miserable their situation is.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-empathize">Your answer <span>(validate + understand)</span></label>
+            <textarea class="answer-input" id="a-empathize" name="empathize" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 25 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">25</div>
+            <div>
+              <p class="prompt">Imagine that someone is a huge fan of yours and is rooting for you to succeed. If they knew you were thinking '#{THOUGHT}', what would they want you TO DO? What is their point of view of your situation?</p>
+              <p class="hint">You could imagine a friend, a family member, a coach, a mentor, or a role model. It doesn't have to be a real person, it could be an entirely made-up person.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-fan">Your answer <span>(encouraging viewpoint)</span></label>
+            <textarea class="answer-input" id="a-fan" name="fan" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 26 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">26</div>
+            <div>
+              <p class="prompt">If SOMEONE ELSE was thinking '#{THOUGHT}', what would you want them TO DO?</p>
+              <p class="hint">Imagine someone else was in this situation. What would you hope they do? Or root for them to do?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-other_to_do">Your answer <span>(actions you’d recommend)</span></label>
+            <textarea class="answer-input" id="a-other_to_do" name="other_to_do" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 27 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">27</div>
+            <div>
+              <p class="prompt">If SOMEONE ELSE was thinking '#{THOUGHT}', what advice would you give them?</p>
+              <p class="hint">Imagine someone else was in this situation and going to you for help. What would you say to them?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-otheradvice">Your answer <span>(words you’d say)</span></label>
+            <textarea class="answer-input" id="a-otheradvice" name="otheradvice" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 28 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">28</div>
+            <div>
+              <p class="prompt">What is something that YOU CAN DO that would help you feel better about '#{NOUN}'?</p>
+              <p class="hint">Focus in on what you can control or do, rather than things that rely on other people doing something.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-you_can">Your answer <span>(one controllable step)</span></label>
+            <textarea class="answer-input" id="a-you_can" name="you_can" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 29 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">29</div>
+            <div>
+              <p class="prompt">What advice would you give yourself regarding '#{NOUN}' and the thought '#{THOUGHT}'?</p>
+              <p class="hint">Imagine talking to yourself and giving yourself advice.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-selfadvice">Your answer <span>(kind + truthful)</span></label>
+            <textarea class="answer-input" id="a-selfadvice" name="selfadvice" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 30 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-numum">30</div>
+            <div>
+              <p class="prompt">Imagine that the thought was being said by a bully. Imagine that someone else believed that your Negative Thought was true for you. They heard your negative thought and they agreed with it. Now they are saying it to you. How would you respond to their negativity (or their criticism)?</p>
+              <p class="hint">Imagine another person believes your negative thought about you and your situation, not necessarily about their own situation. If your thought contains a first-person perspective, you will need to re-write the negative thought from someone else's perspective about you. For example, if your negative thought was 'It will be difficult and I will be miserable' then the other person saying it towards you would be: 'It will be difficult and you will be miserable.' How could you respond? Your thought: '#{THOUGHT}'</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-respond_to_other_negativity">Your answer <span>(stand up for yourself)</span></label>
+            <textarea class="answer-input" id="a-respond_to_other_negativity" name="respond_to_other_negativity" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 31 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">31</div>
+            <div>
+              <p class="prompt">Could you handle the WORST imaginable future regarding '#{NOUN}'?</p>
+              <p class="hint">Suppose everything goes horribly. The worst possible outcomes happen at every possible juncture. Could you handle it?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-worst">Your answer <span>(what coping would look like)</span></label>
+            <textarea class="answer-input" id="a-worst" name="worst" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 32 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">32</div>
+            <div>
+              <p class="prompt">Write out an extremely detailed plan for dealing with '#{NOUN}'</p>
+              <p class="hint">Define lots of little objectives. Break every step down into lots of smaller steps. Be as detailed as possible. Focus on specific actions that need to be taken.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-detailed_plan">Your answer <span>(use extra paper if needed)</span></label>
+            <textarea class="answer-input" id="a-detailed_plan" name="detailed_plan" rows="4"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 33 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">33</div>
+            <div>
+              <p class="prompt">Talk back to the negative thoughts. Tell the negative thoughts and negative part of your brain to be quiet! And to leave you alone!</p>
+              <p class="hint">Tell it to shut up and leave you alone. Tell it to leave you in peace so you can focus on improving the situation. Tell it that it's making things worse by distracting you and that you're sick of it.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-leave_me_alone">Your answer <span>(a firm boundary statement)</span></label>
+            <textarea class="answer-input" id="a-leave_me_alone" name="leave_me_alone" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 34 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">34</div>
+            <div>
+              <p class="prompt">Thank the negative thought for its concern and caution.</p>
+              <p class="hint">Tell the negative part of your brain that you're thankful for it. You understand it's trying to help and protect you. That you understand it's coming from a place of caring and it's trying to help motivate you. That you appreciate its concern.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-thanks">Your answer <span>(acknowledge + redirect)</span></label>
+            <textarea class="answer-input" id="a-thanks" name="thanks" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 35 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">35</div>
+            <div>
+              <p class="prompt">Can you see a good reason to stop believing the thought '#{THOUGHT}'?<sup><em>*</em></sup></p>
+              <p class="hint">What is that reason?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-drop">Your answer <span>(why letting go helps)</span></label>
+            <textarea class="answer-input" id="a-drop" name="drop" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 36 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">36</div>
+            <div>
+              <p class="prompt">What are you grateful for with regard to '#{NOUN}'?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-gratitude">Your answer <span>(even small things count)</span></label>
+            <textarea class="answer-input" id="a-gratitude" name="gratitude" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 37 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">37</div>
+            <div>
+              <p class="prompt">Is it an example of black-or-white when thinking in shades of grey would be more appropriate? '#{THOUGHT}'</p>
+              <p class="hint">Try re-writing your negative thought to be more accurate by describing things on a scale of 0 to 100</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-black-or-white">Your answer <span>(0–100 scale version)</span></label>
+            <textarea class="answer-input" id="a-black-or-white" name="black-or-white" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 38 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">38</div>
+            <div>
+              <p class="prompt">What assumptions are present? Predicting the future? Trying to read someone's mind? Assuming the worst? '#{THOUGHT}'</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-assumptions">Your answer <span>(list assumptions)</span></label>
+            <textarea class="answer-input" id="a-assumptions" name="assumptions" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 39 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">39</div>
+            <div>
+              <p class="prompt">Is it an example of labeling or mislabeling? '#{THOUGHT}'</p>
+              <p class="hint">How do you define those labels?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-labeling">Your answer <span>(labels + definitions)</span></label>
+            <textarea class="answer-input" id="a-labeling" name="labeling" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 40 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">40</div>
+            <div>
+              <p class="prompt">What overgeneralizations are present? '#{THOUGHT}'</p>
+              <p class="hint">For example, generalizing about the future based on the past. Or generalizing about a large group based on a small subset.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-overgeneralization">Your answer <span>(where “always/never” sneaks in)</span></label>
+            <textarea class="answer-input" id="a-overgeneralization" name="overgeneralization" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 41 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">41</div>
+            <div>
+              <p class="prompt">Is it an example of blowing things out of proportion? '#{THOUGHT}'</p>
+              <p class="hint">For example, does it make something seem more important or bigger than it is actually is?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-out_of_proportion">Your answer <span>(size it accurately)</span></label>
+            <textarea class="answer-input" id="a-out_of_proportion" name="out_of_proportion" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 42 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">42</div>
+            <div>
+              <p class="prompt">Is it an example of downplaying, minimizing, or ignoring anything? Does it disqualify, disregard, or discount anything? '#{THOUGHT}'</p>
+              <p class="hint">For example, does it make anything seem unimportant, such as your accomplishments?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-minimizing">Your answer <span>(what you’re discounting)</span></label>
+            <textarea class="answer-input" id="a-minimizing" name="minimizing" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 43 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">43</div>
+            <div>
+              <p class="prompt">Is it an example of filtering? Are you filtering out anything? Something positive? Something negative? '#{THOUGHT}'</p>
+              <p class="hint">For example, you're so focused on all of the things that they do wrong that you filter out the things they do correct.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-filtering">Your answer <span>(what’s excluded?)</span></label>
+            <textarea class="answer-input" id="a-filtering" name="filtering" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 44 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">44</div>
+            <div>
+              <p class="prompt">What cognitive distortions are present in your beliefs about '#{NOUN}'?</p>
+              <p class="hint">How might you be exagerrating? Overestimating? Underestimating? Too focused? Predicting? Labeling? Mind-reading? Assuming? Personalizing? Shoulding? Magnifying? Minifying? Over-generalizing? Filtering? Ignoring the positive? Ignoring nuance?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-distortions">Your answer <span>(name a few)</span></label>
+            <textarea class="answer-input" id="a-distortions" name="distortions" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 45 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">45</div>
+            <div>
+              <p class="prompt">How do you treat '#{NOUN}' when you think '#{THOUGHT}'?<sup><em>*</em></sup> How do you behave?</p>
+              <p class="hint">And how do you treat yourself?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-treat">Your answer <span>(behavior patterns)</span></label>
+            <textarea class="answer-input" id="a-treat" name="treat" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 46 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">46</div>
+            <div>
+              <p class="prompt">How would you treat '#{NOUN}' WITHOUT the thought '#{THOUGHT}'?<sup><em>*</em></sup> How would you behave?</p>
+              <p class="hint">How would you treat yourself WITHOUT this thought?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-treat_without">Your answer <span>(preferred behavior)</span></label>
+            <textarea class="answer-input" id="a-treat_without" name="treat_without" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 47 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">47</div>
+            <div>
+              <p class="prompt">What do you see, envision, or imagine when you believe '#{THOUGHT}'?<sup><em>*</em></sup></p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-envision">Your answer <span>(mental images)</span></label>
+            <textarea class="answer-input" id="a-envision" name="envision" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 48 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">48</div>
+            <div>
+              <p class="prompt">What do you see or imagine it would be like if you could let go of the thought '#{THOUGHT}'?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-envision_without">Your answer <span>(alternative image)</span></label>
+            <textarea class="answer-input" id="a-envision_without" name="envision_without" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 49 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">49</div>
+            <div>
+              <p class="prompt">Why do you think '#{NOUN}' is the way it currently is?</p>
+              <p class="hint">Can you give an explanation?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-why">Your answer <span>(possible causes)</span></label>
+            <textarea class="answer-input" id="a-why" name="why" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 50 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">50</div>
+            <div>
+              <p class="prompt">Can you see a STRESS-FREE reason to keep believing the thought '#{THOUGHT}'?<sup><em>*</em></sup></p>
+              <p class="hint">What is that reason?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-keep">Your answer <span>(if any)</span></label>
+            <textarea class="answer-input" id="a-keep" name="keep" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 51 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">51</div>
+            <div>
+              <p class="prompt">Whose business is it?<sup><em>*</em></sup></p>
+              <p class="hint">Yours? Someone else's? The universe's?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-business">Your answer <span>(circle the owner)</span></label>
+            <textarea class="answer-input" id="a-business" name="business" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 52 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">52</div>
+            <div>
+              <p class="prompt">Why does '#{NOUN}' bother or upset you so much?</p>
+              <p class="hint">Is there a self-doubt doubt or limiting belief related to it? Is there an emotional wound?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-bother">Your answer <span>(what’s underneath?)</span></label>
+            <textarea class="answer-input" id="a-bother" name="bother" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 53 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">53</div>
+            <div>
+              <p class="prompt">What is bothering you more right now, '#{NOUN}' or your thinking?</p>
+              <p class="hint">Your thoughts, beliefs, feelings, emotions regarding it</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-bothers_you_more">Your answer <span>(pick one + explain)</span></label>
+            <textarea class="answer-input" id="a-bothers_you_more" name="bothers_you_more" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 54 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">54</div>
+            <div>
+              <p class="prompt">How can you turn the thought around to the OPPOSITE?<sup><em>*</em></sup></p>
+              <p class="hint">Instead of ABC is/does XYZ, how is the opposite true? ABC is/does NOT XYZ. What is the counter-evidence? ('#{THOUGHT}')</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-turnaround_opposite">Your answer <span>(counter-evidence)</span></label>
+            <textarea class="answer-input" id="a-turnaround_opposite" name="turnaround_opposite" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 55 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">55</div>
+            <div>
+              <p class="prompt">How can you turn the thought around to YOURSELF?<sup><em>*</em></sup></p>
+              <p class="hint">Instead of ABC does XYZ, how do YOU do XYZ? ('#{THOUGHT}')</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-turnaround_self">Your answer <span>(self-reflection)</span></label>
+            <textarea class="answer-input" id="a-turnaround_self" name="turnaround_self" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 56 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">56</div>
+            <div>
+              <p class="prompt">How can you turn the thought around the OTHER WAY?<sup><em>*</em></sup></p>
+              <p class="hint">Instead of ABC does XYZ to me, how do YOU do XYZ to ABC? Or turnaround to the present? ('#{THOUGHT}')</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-turnaround_other">Your answer <span>(flip direction/time)</span></label>
+            <textarea class="answer-input" id="a-turnaround_other" name="turnaround_other" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 57 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">57</div>
+            <div>
+              <p class="prompt">How can you turn the thought around to YOUR THINKING?<sup><em>*</em></sup></p>
+              <p class="hint">Instead of ABC does XYZ, how is your thinking XYZ? ('#{THOUGHT}')</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-turnaround_thinking">Your answer <span>(name the thought-pattern)</span></label>
+            <textarea class="answer-input" id="a-turnaround_thinking" name="turnaround_thinking" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 58 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">58</div>
+            <div>
+              <p class="prompt">Rewrite the thought '#{THOUGHT}' in a way that is more true or more helpful.</p>
+              <p class="hint">Try to be as true, accurate, helpful, and kind as possible. Try to be 100% truthful.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-rewrite">Your answer <span>(truthful + kind rewrite)</span></label>
+            <textarea class="answer-input" id="a-rewrite" name="rewrite" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 59 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">59</div>
+            <div>
+              <p class="prompt">How upsetting is '#{NOUN}' to you now?</p>
+              <p class="hint">On a scale of 1-10, (10 is extremely upsetting, 1 is only a tiny bit upsetting)</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-postmeasure">Your answer <span>(1–10 + notes)</span></label>
+            <textarea class="answer-input" id="a-postmeasure" name="postmeasure" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 60 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">60</div>
+            <div>
+              <p class="prompt">How do you feel now? Describe it.</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-now">Your answer <span>(current feeling)</span></label>
+            <textarea class="answer-input" id="a-now" name="now" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 61 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">61</div>
+            <div>
+              <p class="prompt">What's another thought you could examine next? What belief lead you to believe this one?</p>
+              <p class="hint">What other thoughts should you examine next?</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-next">Your answer <span>(next target thought)</span></label>
+            <textarea class="answer-input" id="a-next" name="next" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 62 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">62</div>
+            <div>
+              <p class="prompt">Was using ExamineYourThoughts.com a good use of your time?</p>
+              <p class="hint">Or was it a waste of time? On a scale of 0-10, where 0 is waste of time and 10 is an amazing use of your time, how worthwhile was it? Explain why</p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-worthwhile">Your answer <span>(0–10 + why)</span></label>
+            <textarea class="answer-input" id="a-worthwhile" name="worthwhile" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+
+      <!-- 63 -->
+      <li class="q">
+        <div class="q-inner">
+          <div class="q-head">
+            <div class="q-num">63</div>
+            <div>
+              <p class="prompt">The End</p>
+              <p class="hint">I hope this thinking exercise helped you feel a little better.<br/><em>Refresh this page or hit the Restart button below to try it again.</em></p>
+            </div>
+          </div>
+          <div class="answer-block">
+            <label class="answer-label" for="a-end">Notes <span>(optional)</span></label>
+            <textarea class="answer-input" id="a-end" name="end" rows="3"></textarea>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </main>
+</body>
+</html>
