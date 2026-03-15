@@ -3,6 +3,14 @@ const long_list_of_questions =
 [
 // Array of steps. Each step contains a question for the user
 // Each step also contains how to handle the user's response
+	// {
+	// 	"id": "",
+	// 	"prompt": "",
+	// 	"hint": "",
+	// 	"response": "",
+	// 	"response_handler": "",
+	// 	"result_tag": "",
+	// },
 	{
 		"id": "welcome",
 		"prompt": "<h5><em>ExamineYourThoughts.com</em></h5>Welcome! I will ask you some helpful questions.",
@@ -466,24 +474,118 @@ const long_list_of_questions =
 		"response_handler": "",
 		"result_tag": "Rewrite"
 	},
-	/*
 	{
-		"id": "false",
-		"prompt": "What are THREE REASONS why '#{THOUGHT}' is false?",
+		"id": "coach",
+		"prompt": "What would a kind and honest coach say to me right now?",
+		"hint": "Imagine you hired a coach that is inredibly kind, honest, caring, thoughtful, intelligent, wise, and experienced.",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Coach",
+	},
+	{
+		"id": "values",
+		"prompt": "What value or values do you want to stand for in this situation?",
 		"hint": "",
 		"response": "",
 		"response_handler": "",
-		"result_tag": "Arguments against the thought"
+		"result_tag": "Values",
 	},
 	{
-		"id": "myself",
-		"prompt": "What are THREE WAYS in which I am somehow causing the feeling '#{FEELING}' to occur? Or how do your thoughts cause you to feel that way?",
+		"id": "emotions",
+		"prompt": "Which emotions are you least willing to feel in this situation?",
 		"hint": "",
 		"response": "",
 		"response_handler": "",
-		"result_tag": "Turn around towards self"
+		"result_tag":"emotions_avoid"
 	},
-	*/
+	{
+		"id": "belief_amount",
+		"prompt": "Imagine you could decrease how much you believe the thought without completely removing ALL of your belief in the thought. How would that change your behavior and feelings?",
+		"hint": "Believing a negative thought can sometimes have some subtle benefits or positive side effects. For example, believing that something is going to be time-consuming can help you schedule it properly. Instead of trying to reduce your belief completely, it may be best to try to decrease your belief in the thought. Without completely removing your belief in the thought.",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Belief amount",
+	},
+	{
+		"id": "Become",
+		"prompt": "Who do you become when you believe the negative thought?",
+		"hint": "What type of person do you become?",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Become",
+	},
+	{
+		"id": "new_thought",
+		"prompt": "What is the new thought that I want to practice?",
+		"hint": "Who do you become when you believe the new thought?",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "New Thought",
+	},
+	{
+		"id": "tiny_next_step",
+		"prompt": "What is the smallest next step you could take in a positive direction?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Tiny Next Step",
+	},
+	{
+		"id": "trigger",
+		"prompt": "What could trigger this negative thought to occur again in the future?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Trigger",
+	},
+	{
+		"id": "experiment",
+		"prompt": "Describe a small experiment that you could try during the next 24 hours that would be helpful in this situation?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Experiment",
+	},
+	{
+		"id": "inner_critic",
+		"prompt": "What does your inner critic say? What does your wiser voice say back?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Inner Critic/Wiser Self",
+	},
+	{
+		"id": "why_not_100",
+		"prompt": "Write one to three reasons why the negative statement is not 100% true.",
+		"hint": "If the negative thought is 100% true, skip this question.",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "WhyNot100",
+	},
+	{
+		"id": "best_advice",
+		"prompt": "What's the absolute best advice you can give yourself in this situation?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Best Advice",
+	},
+	{
+		"id": "future_imagine",
+		"prompt": "Imagine it is ten years in the future and you are looking back to right now. What does your future self wish you had done right now?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Future",
+	},
+	{
+		"id": "best_question",
+		"prompt": "Which question in this worksheet helped you the most?",
+		"hint": "Which question was the most beneficial for you?",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Best question",
+	},
 	{
 		"id": "postmeasure",
 		"prompt": "How upsetting is '#{NOUN}' to you now?",
