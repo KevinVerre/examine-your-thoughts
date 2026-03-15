@@ -13,8 +13,8 @@ const long_list_of_questions =
 	// },
 	{
 		"id": "welcome",
-		"prompt": "<h5><em>ExamineYourThoughts.com</em></h5>Welcome! I will ask you some helpful questions.",
-		"hint": "Are you upset, angry, unmotivated, or worried about something?<br/>These questions are designed to help you worry less about something in your life, and to motivate you.<br/>Please submit anything to continue. <em>(Click Button or Press Enter to submit)</em><br/><br/><i>This is the full version.<br>It asks all questions. You can try the shorter question set if you like.</i>",
+		"prompt": "<h5><em>ExamineYourThoughts.com</em></h5>Welcome! This guided worksheet will help you examine a stressful thought, one question at a time.",
+		"hint": "Are you upset, angry, unmotivated, sad, anxious, or worried about something?<br/>These questions will help you see your situation more clearly.<br/><br/><em>(Click Button or Press Enter to submit)</em><br/><br/><i>This is the full version with all questions. A shorter version is also available.</i>",
 		"response": "",
 		"response_handler": "handle_initial_response",
 		"result_tag": ""
@@ -37,16 +37,16 @@ const long_list_of_questions =
 	},
 	{
 		"id": "feel",
-		"prompt": "How do you FEEL when you think about '#{NOUN}'? How does it make you feel? ",
-		"hint": "Examples: hopeless, overwhelmed, depressed, tired, bored, distracted, intimidated, frustrated, angry, scared, unmotivated, uninterested, uninspired, upset, challenged, stressed, anxious, reluctant, lazy, hesitant, lethargic, avoidant, averse",
+		"prompt": "How do you feel when you think about '#{NOUN}'?",
+		"hint": "Examples: hopeless, overwhelmed, depressed, tired, bored, distracted, intimidated, frustrated, angry, scared, unmotivated, uninterested, uninspired, upset, challenged, stressed, anxious, reluctant, lazy, hesitant, lethargic, avoidant, averse, jealous, etc.",
 		"response": "",
 		"response_handler": "save_feeling_response",
 		"result_tag": "The Feeling"
 	},
 	{
 		"id": "thought",
-		"prompt": "Write a thought about '#{NOUN}' and how you feel about it or why you feel that way. ('#{FEELING}')",
-		"hint": "What are you thinking about it?<br/>Example: '#{NOUN}' is making me feel '#{FEELING}' because ________ .",
+		"prompt": "Write out the exact stressful thought you're having about '#{NOUN}'",
+		"hint": "'#{NOUN}' is making me feel '#{FEELING}' because ________ .",
 		"response": "",
 		"response_handler": "save_thought_response",
 		"result_tag": "Stressful thought"
@@ -62,7 +62,7 @@ const long_list_of_questions =
 	{
 		"id": "absolutely",
 		"prompt": "'#{THOUGHT}' ...Can you absolutely be sure it is true?<sup><em>*</em></sup>",
-		"hint": "Can you prove that it's true? Is it <em>even possible</em> to prove that it's true? Why or why not? Be honest if it's a Yes.",
+		"hint": "Can you prove that it's true? Is it <em>even possible</em> to prove? Why or why not? Note: it's perfectly fine to say Yes.",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Absolutely true"
@@ -78,7 +78,7 @@ const long_list_of_questions =
 	{
 		"id": "without",
 		"prompt": "Who would you be if you didn't believe the thought '#{THOUGHT}'?<sup><em>*</em></sup>",
-		"hint": "Without the thought, what would you do? What would you be doing? What action would you take? How would you feel? How would you be different? How would you treat the situation differently? (This is my favorite step.)",
+		"hint": "Without the thought, what would you be doing? What action would you take? How would you feel? How would you treat the situation differently? (This is one of my favorite steps.)",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Without"
@@ -94,7 +94,7 @@ const long_list_of_questions =
 	{
 		"id": "kind_of_person",
 		"prompt": "With regard to '#{NOUN}', what kind of person do you want to be?",
-		"hint": "How do you want other people to think of you? How do you want to be remembered? What would your role model do? What are you rooting for yourself to do?",
+		"hint": "How do you want other people to think of you? How do you want to be remembered? What would your role model do? What are you rooting for yourself to do? (My other favorite question!)",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Kind of Person"
@@ -102,23 +102,31 @@ const long_list_of_questions =
 	{
 		"id": "child",
 		"prompt": "Imagine you had a child in this exact same situation, what would you want them to do with regards to this situation?",
-		"hint": "",
+		"hint": "What advice would you give a child? How would you comfort them? Does that advice apply to you too?",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Child"
 	},
 	{
+		"id": "youngerself",
+		"prompt": "Would you say '#{THOUGHT}' to your younger self?",
+		"hint": "Why or why not? What about to your older self? To your present self?",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Younger Self"
+	},
+	{
 		"id": "what_to_say_to_friend",
 		"prompt": "What would you say to a friend of yours in a similar situation?",
-		"hint": "How would you react if you believed what you would say to a friend instead of what you originally thought?",
+		"hint": "What encouragement, advice, or comfort would you offer them? Can you say that to yourself?",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Msg to Friend"
 	},
 	{
 		"id": "would_you_say_to_friend",
-		"prompt": "Take the original thought: '#{THOUGHT}'. Would you say something like that original thought to someone else if they were in a similar situation?",
-		"hint": "Why or why not? Would it be rude? Mean? Discouraging? Untruthful? Unfriendly?",
+		"prompt": "Would you ever say '#{THOUGHT}' to a friend in a similar situation?",
+		"hint": "Why or why not? Would it be rude, mean, discouraging, untruthful, unhelpful, or unfriendly?",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Friend"
@@ -133,8 +141,8 @@ const long_list_of_questions =
 	},
 	{
 		"id": "helpful",
-		"prompt": "Is thinking '#{THOUGHT}' helping you? Or is it keeping you stuck? Or is it hurting you?",
-		"hint": "How is it helping you? Or how is it keeping you stuck? Or how is it hurting you?",
+		"prompt": "Is the thought '#{THOUGHT}' helping you, keeping you stuck, or hurting you?",
+		"hint": "Explain how. Even if the thought ontains some truth, is believing it actually making things better?",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Helpful"
@@ -142,47 +150,39 @@ const long_list_of_questions =
 	{
 		"id": "fiveMinutes",
 		"prompt": "Spend five minutes taking small steps to improve the situation regarding #{NOUN}. What did you do during those 5 minutes and how did it go?",
-		"hint": "Set a five minute timer. If necessary, you could try to write out a list of small steps you could take during those five minutes.",
+		"hint": "Set a timer for five minutes. Take any small action. Come back and describe what you did and how it sent.",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "5 minutes"
 	},
 	{
 		"id": "cost",
-		"prompt": "Is believing the thought '#{THOUGHT}' costing you?",
-		"hint": "What has this belief cost you in the past? In the present? In the future?",
+		"prompt": "What has believing '#{THOUGHT}' cost you?",
+		"hint": "Consider costs to your time, energy, relationships, opportunities. Consider costs in the past, present, and future.",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Cost"
 	},
 	{
-		"id": "youngerself",
-		"prompt": "Would you say '#{THOUGHT}' to your younger self?",
-		"hint": "Why or why not? What about to your older self? To your present self?",
-		"response": "",
-		"response_handler": "",
-		"result_tag": "Younger Self"
-	},
-	{
 		"id": "Hurry",
-		"prompt": "How could you improve this situation IN A HURRY?",
-		"hint": "Imagine you only had one hour. Or one day. NOT one week. NOT one year. Maybe you would be better off getting stuff done QUICKLY rather than perfectly.",
+		"prompt": "How could you improve this situation in a hurry?",
+		"hint": "Imagine you only had one hour. Maybe you would be better off getting something done quickly rather than perfectly.",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Hurry"
 	},
 	{
 		"id": "positive_character",
-		"prompt": "Does this thought say anything positive about your character? '#{THOUGHT}'",
-		"hint": "What do you like about yourself that is reflected in this thought/belief?",
+		"prompt": "Does the fact that you're bothered by this thought say anything positive about your character? '#{THOUGHT}'",
+		"hint": "What do you like about yourself that is reflected in this thought/belief? What does this thought reveal about your values?",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Positive",
 	},
 	{
 		"id": "knowledge",
-		"prompt": "How could you become more knowledgeable about the subject? '#{THOUGHT}'",
-		"hint": "Are there mentors, teachers, coaches, friends, guides that you could learn from? What knowledge are you missing? You don't even know what you don't know!",
+		"prompt": "What knowledge or skills could help you with this situation? '#{THOUGHT}'",
+		"hint": "How could you become more knowledgeable or skillful? Are there mentors, teachers, coaches, friends, guides that you could learn from? What knowledge are you missing? You don't even know what you don't know!",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Knowledge",
