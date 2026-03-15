@@ -182,7 +182,7 @@ const long_list_of_questions =
 	{
 		"id": "knowledge",
 		"prompt": "How could you become more knowledgeable about the subject? '#{THOUGHT}'",
-		"hint": "Are there mentors, teachers, coaches, friends, guides that you could learn from? What knowledge are you missing? You don't even know what you all you don't know.",
+		"hint": "Are there mentors, teachers, coaches, friends, guides that you could learn from? What knowledge are you missing? You don't even know what you don't know!",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Knowledge",
@@ -334,7 +334,7 @@ const long_list_of_questions =
 	{
 		"id": "out_of_proportion",
 		"prompt": "Is it an example of blowing things out of proportion? '#{THOUGHT}'",
-		"hint": "For example, does it make something seem more important or bigger than it is actually is?",
+		"hint": "For example, does it make something seem more important or bigger than it actually is?",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Out of Proportion"
@@ -358,7 +358,7 @@ const long_list_of_questions =
 	{
 		"id": "distortions",
 		"prompt": "What cognitive distortions are present in your beliefs about '#{NOUN}'?",
-		"hint": "How might you be exagerrating? Overestimating? Underestimating? Too focused? Predicting? Labeling? Mind-reading? Assuming? Personalizing? Shoulding? Magnifying? Minifying? Over-generalizing? Filtering? Ignoring the positive? Ignoring nuance?",
+		"hint": "How might you be exaggerating? Overestimating? Underestimating? Too focused? Predicting? Labeling? Mind-reading? Assuming? Personalizing? Shoulding? Magnifying? Minifying? Over-generalizing? Filtering? Ignoring the positive? Ignoring nuance?",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Distortions"
@@ -422,7 +422,7 @@ const long_list_of_questions =
 	{
 		"id": "bother",
 		"prompt": "Why does '#{NOUN}' bother or upset you so much?",
-		"hint": "Is there a self-doubt doubt or limiting belief related to it? Is there an emotional wound?",
+		"hint": "Is there a self-doubt or limiting belief related to it? Is there an emotional wound?",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Bothers me"
@@ -477,7 +477,7 @@ const long_list_of_questions =
 	{
 		"id": "coach",
 		"prompt": "What would a kind and honest coach say to me right now?",
-		"hint": "Imagine you hired a coach that is inredibly kind, honest, caring, thoughtful, intelligent, wise, and experienced.",
+		"hint": "Imagine you hired a coach that is incredibly kind, honest, caring, thoughtful, intelligent, wise, and experienced.",
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Coach",
@@ -604,7 +604,7 @@ const long_list_of_questions =
 	},
 	{
 		"id": "next",
-		"prompt": "What's another thought you could examine next? What belief lead you to believe this one?",
+		"prompt": "What's another thought you could examine next? What belief led you to believe this one?",
 		"hint": "What other thoughts should you examine next?",
 		"response": "",
 		"response_handler": "",
