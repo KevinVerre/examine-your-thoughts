@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Examine Your Thoughts — Worksheet</title>
+
+  <style>
+    /* =========================================================
+       Screen (nice + usable) + Print (black/white + compact)
+       Pure HTML/CSS. No JS.
+       ========================================================= */
+
+    :root{
+      --ink: #111;
+      --muted: #444;
+      --faint: #666;
+      --border: #d8d8d8;
+      --paper: #fff;
+      --bg: #f6f7fb;
+
+      --maxw: 980px;
+      --radius: 12px;
+      --shadow: 0 10px 26px rgba(0,0,0,0.08);
+
+      --fs-prompt: 15px;
+      --fs-hint: 13px;
+      --fs-meta: 12px;
+      --fs-input: 14px;
+
+      --pad-card: 14px;
+      --gap: 12px;
+    }
+
+    html, body { height: 100%; }
+    body{
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.3;
+    }
+
+    .page{
+      max-width: var(--maxw);
+      margin: 22px auto 48px;
+      padding: 0 16px;
+    }
+
+    ol.questions{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: var(--gap);
+    }
+
+    .q{
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .q-inner{
+      padding: var(--pad-card);
+    }
+
+    .q-head{
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .q-num{
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      font-size: 14px;
+      color: #222;
+      background: #f3f4f6;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: 36px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .prompt{
+      margin: 0;
+      font-size: var(--fs-prompt);
+      font-weight: 650;
+      letter-spacing: -0.01em;
+    }
+
+    /* The first prompt includes its own <h5> etc */
+    .prompt h5{
+      margin: 0 0 6px 0;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .hint{
+      margin: 8px 0 0;
+      font-size: var(--fs-hint);
+      color: var(--muted);
+    }
+
+    .answer-block{
+      margin-top: 10px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .answer-label{
+      font-size: 11px;
+      color: var(--faint);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .answer-label span{
+      text-transform: none;
+      letter-spacing: normal;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    textarea.answer-input{
+      width: 100%;
+      box-sizing: border-box;
+      resize: vertical;
+      min-height: 86px; /* screen-friendly */
+      padding: 10px 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font: inherit;
+      font-size: var(--fs-input);
+      line-height: 1.35;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    textarea.answer-input:focus{
+      outline: 2px solid #94a3b8;
+      outline-offset: 2px;
+      border-color: #94a3b8;
+    }
+
+    @media (max-width: 860px){
+      .page{ padding: 0 12px; }
+    }
+
+    /* =========================================================
+       PRINT MODE: black/white, minimal ink, very compact
+       Target: ~5 pages by increasing columns + shrinking whitespace.
+       ========================================================= */
+    @page{
+      margin: 0.32in;
+    }
+
+    @media print{
+      :root{
+        --bg: #fff;
+        --paper: #fff;
+        --shadow: none;
+        --border: #000;
+        --muted: #000;
+        --faint: #000;
+
+        /* smaller typography for density */
+        --fs-prompt: 9.2pt;
+        --fs-hint: 7.6pt;
+        --fs-meta: 7.5pt;
+        --fs-input: 9pt;
+
+        --pad-card: 6px;
+        --gap: 6px;
+      }
+
+      body{
+        background: #fff !important;
+        color: #000 !important;
+      }
+
+      .page{
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* 3 columns: biggest win for page count */
+      ol.questions{
+        display: block;
+        column-count: 3;
+        column-gap: 0.22in;
+        margin-top: 0;
+      }
+
+      .q{
+        box-shadow: none !important;
+        border: 1px solid #000;
+        border-radius: 0;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin: 0 0 var(--gap) 0;
+      }
+
+      .q-inner{
+        padding: var(--pad-card);
+      }
+
+      .q-head{
+        grid-template-columns: 28px 1fr;
+        gap: 6px;
+      }
+
+      .q-num{
+        background: #fff;
+        border: 1px solid #000;
+        border-radius: 0;
+        width: 24px;
+        height: 18px;
+        font-size: 8.5pt;
+        margin-top: 0;
+      }
+
+      .prompt{
+        line-height: 1.12;
+      }
+
+      .prompt h5{
+        font-size: 7.5pt;
+        margin: 0 0 2px 0;
+        letter-spacing: 0.04em;
+      }
+
+      .hint{
+        margin-top: 3px;
+        line-height: 1.08;
+      }
+
+      /* Requirement #3: do NOT show "Your answer" in print */
+      .answer-label{
+        display: none !important;
+      }
+
+      .answer-block{
+        margin-top: 5px;
+        gap: 0;
+      }
+
+      /* Requirement #2: smaller answer boxes in print
+         - default: ~1.2 lines
+         - change height to 2.2em if you want ~2 lines
+      */
+  textarea.answer-input{
+    /* Make it behave like a plain box the print engine won't "theme" */
+    -webkit-appearance: none;
+    appearance: none;
+
+    box-sizing: border-box;
+    width: 100%;
+
+    /* Compact size */
+    margin: 0;
+    padding: 0 0.06in;          /* tiny left/right so text isn't on the edge */
+    min-height: 0;
+    height: 1.25em;             /* ~1 line */
+    resize: none;
+
+    /* Printer-friendly "always white + black" */
+    background-color: #fff !important;
+    color: #000 !important;
+
+    /* Optional: give it a faint outline so the field is visible */
+    border: 1px solid #000;
+    border-radius: 0;
+    outline: none;
+
+    font: inherit;
+    font-size: var(--fs-input);
+    line-height: 1.15;
+
+    /* Handwriting guide lines (will print if backgrounds are allowed) */
+    background-image: linear-gradient(
+      to bottom,
+      transparent 1.05em,
+      #000 1.05em,
+      #000 1.08em,
+      transparent 1.08em
+    ) !important;
+    background-size: 100% 1.25em !important;
+    background-repeat: repeat-y !important;
+
+    /* Encourage browsers to actually print the background lines */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* In case the environment uses forced/high-contrast colors */
+  @media (forced-colors: active) {
+    textarea.answer-input{
+      forced-color-adjust: none;
+      background: #fff !important;
+      color: #000 !important;
+      border: 1px solid #000;
+      background-image: none !important; /* guide lines may be overridden anyway */
+    }
+  }
+
+
+      /* Extra: avoid printing focus outlines */
+      textarea.answer-input:focus{
+        outline: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <ol class="questions" id="questions-list"></ol>
+  </main>
+
+  <script src="longListOfQuestions.js"></script>
+  <script>
+    function mapQuestionsListToHtml(questionList) {
+      var html = '';
+      for (var i = 0; i < questionList.length; i++) {
+        var q = questionList[i];
+        var num = i + 1;
+
+        html += '<li class="q"><div class="q-inner"><div class="q-head">';
+        html += '<div class="q-num">' + num + '</div>';
+        html += '<div>';
+        html += '<div class="prompt">' + q.prompt + '</div>';
+        if (q.hint) {
+          html += '<p class="hint">' + q.hint + '</p>';
+        }
+        html += '</div></div>';
+        html += '<div class="answer-block">';
+        html += '<label class="answer-label" for="a-' + q.id + '">Your answer</label>';
+        html += '<textarea class="answer-input" id="a-' + q.id + '" name="' + q.id + '" rows="3"></textarea>';
+        html += '</div></div></li>';
+      }
+      return html;
+    }
+
+    document.getElementById('questions-list').innerHTML = mapQuestionsListToHtml(long_list_of_questions);
+  </script>
+</body>
+</html>
