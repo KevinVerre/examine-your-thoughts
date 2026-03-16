@@ -16,9 +16,36 @@
 		<meta property="og:url" content="http://examineyourthoughts.com">
 
 		<style>
-			/* Not sure if this is a good idea or not. Was trying to make it look nicer on Mobile */
+			html, body {
+				overflow-x: hidden;
+				max-width: 100%;
+			}
+
+			textarea {
+				font-size: 16px;
+			}
+
 			.jumbotron .container, .container {
-				max-width: 98%;
+				max-width: 100%;
+				width: 100%;
+				box-sizing: border-box;
+			}
+
+			/* Prevent long words from overflowing */
+			#prompt_text, #hint_text {
+				word-wrap: break-word;
+				overflow-wrap: break-word;
+			}
+
+			/*
+			 * Bootstrap 3 .row has margin-left/right: -15px, designed to be
+			 * paired with .col-* children. This page puts content directly
+			 * in .row without columns, so the negative margins cause 30px
+			 * of horizontal overflow. Zero them out.
+			 */
+			.row {
+				margin-left: 0;
+				margin-right: 0;
 			}
 
 			.show-one-button:hover {
@@ -45,6 +72,36 @@
 				margin-bottom: 15px;
 				padding-top: 32px;
 				padding-bottom: 32px;
+			}
+
+			/* Mobile-specific improvements */
+			@media (max-width: 767px) {
+				.jumbotron {
+					padding-left: 20px;
+					padding-right: 20px;
+				}
+
+				.container {
+					padding-left: 20px;
+					padding-right: 20px;
+				}
+
+				.custom-jumbotron {
+					padding-top: 18px;
+					padding-bottom: 18px;
+				}
+
+				/* Reduce large heading font size on small screens */
+				#prompt_text {
+					font-size: 1.4rem;
+					line-height: 1.35;
+				}
+
+				/* Full-width submit button for easier tapping */
+				#submit_button {
+					width: 100%;
+					margin-top: 6px;
+				}
 			}
 		</style>
 
