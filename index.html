@@ -215,7 +215,7 @@
 				question_button_set_text = try_shorter_text;
 			}
 
-			// The most important user response's are saved here
+			// The most important user response's are stored in Browser tab Javascript memory here
 			var response = {
 				"noun": "",
 				"feeling": "",
@@ -624,7 +624,6 @@
 				<input type="button" value="Try the other set of questions" id="swap-question-set-btn" onclick="swap_question_set();" class="btn-default btn-sm" style="margin-bottom:4px;"/>
 			</div>
 			<br>
-			<div class="row"><div class=""><em>Your answers are private and are not saved anywhere.</em></div></div>
 			<div class="row"><div class="">Website code and text by Kevin Verre.</div></div>
 			<div class="row"><div class="">
 				Questions inspired by book "Loving What Is" and the "Love Your Neighbor" worksheet by Byron Katie. (<a href="https://thework.com">TheWork.com</a>)</div>
@@ -634,7 +633,8 @@
 			</div>
 			<div class="row"><div class="">* Some of the phrases come from Byron Katie's writing. I use an asterisk (*) to attribute a question or phrase to her. A few questions were inspired by a book "When Panic Attacks" by Dr. David Burns. Check out his new book "Feeling Great" and his website: <a href="https://feelinggood.com">FeelingGood.com</a></div></div>
 			<br/>
-
+			<div class="row"><div class=""><em>Privacy notice: examineyourthoughts.com does not collect or see your answers. All processing happens locally in your browser — no responses are sent to our    
+  servers.</em></div></div><br/>
 			<div class="row">
 				<input type="button" value="Restart" onclick="restart();" class="btn-danger btn-xs"/>
 				<input type="button" id="show_all_button" value="See All Questions" onclick="show_all_questions();" class="btn-default btn-xs"/>
