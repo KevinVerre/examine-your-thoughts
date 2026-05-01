@@ -92,6 +92,14 @@ const long_list_of_questions =
 		"result_tag": "Turnarounds"
 	},
 	{
+		"id": "coach",
+		"prompt": "What would a kind, honest, and wise coach say to me right now?",
+		"hint": "Imagine you hired a coach that is incredibly kind, honest, caring, thoughtful, intelligent, wise, and experienced.",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Coach",
+	},
+	{
 		"id": "kind_of_person",
 		"prompt": "With regard to '#{NOUN}', what kind of person do you want to be?",
 		"hint": "How do you want other people to think of you? How do you want to be remembered? What would your role model do? What are you rooting for yourself to do? (My other favorite question!)",
@@ -473,14 +481,6 @@ const long_list_of_questions =
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Rewrite"
-	},
-	{
-		"id": "coach",
-		"prompt": "What would a kind and honest coach say to me right now?",
-		"hint": "Imagine you hired a coach that is incredibly kind, honest, caring, thoughtful, intelligent, wise, and experienced.",
-		"response": "",
-		"response_handler": "",
-		"result_tag": "Coach",
 	},
 	{
 		"id": "values",
