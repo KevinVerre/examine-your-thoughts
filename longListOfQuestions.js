@@ -84,6 +84,22 @@ const long_list_of_questions =
 		"result_tag": "Without"
 	},
 	{
+		"id":"evidencefor",
+		"prompt":"What is the evidence FOR your negative thought?",
+		"hint":"",
+		"response": "",
+		"response_handler": "",
+		"result_tag":"Evidence?"
+	},
+	{
+		"id":"evidenceAgainst",
+		"prompt":"What is the evidence AGAINST your negative thought?",
+		"hint":"",
+		"response": "",
+		"response_handler": "",
+		"result_tag":"Against?"
+	},
+	{
 		"id": "turnaround",
 		"prompt": "What are some of the turnarounds?<sup><em>*</em></sup> (for '#{THOUGHT}')",
 		"hint": "A turnaround is where you rephrase the thought toward yourself or towards the opposite in a way that you believe is more true",
