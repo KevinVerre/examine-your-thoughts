@@ -28,8 +28,10 @@ No automated tests exist. Test manually by going through both question sets in t
 ### Question Sets
 
 Two question sets selectable via URL parameter (`?question_set=short` or `?question_set=long`):
-- **Short set** (~10 questions): Core Byron Katie questions, defined inline in `index.html`
+- **Short set** (~10 questions): Core Byron Katie questions, defined inline in `index.html` as the `short_list_of_questions` array (around line 217)
 - **Long set** (60+ questions): Comprehensive CBT questions, defined in `longListOfQuestions.js` as the `long_list_of_questions` constant
+
+The default question set is the **long set**, controlled by `steps_str = LONG_LIST` near the top of `onload_initialize()`'s setup block in `index.html`.
 
 ### Question Object Structure
 
@@ -62,11 +64,13 @@ State lives in: `current_step_number`, `steps` (active question array), `respons
 | `longListOfQuestions.js` | Long question set data (imported by index.html and generatedWorksheet.html) |
 | `worksheet.html` | Static printable worksheet — pure HTML/CSS, no JavaScript, standalone |
 | `generatedWorksheet.html` | Dynamic worksheet that renders questions from longListOfQuestions.js |
+| `ExamineYourThoughts.pdf` | Static downloadable PDF of the worksheet — committed once and not regenerated from source; update by hand if worksheet content changes meaningfully |
 | `CNAME` | GitHub Pages custom domain config |
 
 ### Important Constraints
 
 - `worksheet.html` is intentionally standalone with no JS dependencies — it has its own copy of question text hardcoded in HTML
-- When questions are added/edited in `longListOfQuestions.js`, `worksheet.html` must be updated separately
+- When question text changes in `longListOfQuestions.js`, `generatedWorksheet.html` picks it up automatically (it reads the JS module), but `worksheet.html` must be edited by hand because its question text is hardcoded into the HTML
 - The site uses jQuery 3.1.1 and Bootstrap 3.3.7 loaded from CDNs
 - Enter submits the current answer; Shift+Enter adds a newline
+- Dark mode is a `body.dark-mode` class toggled by `toggleDarkMode()` and persisted in `localStorage` under the `darkMode` key. All dark-mode styles live in `index.html` under `body.dark-mode ...` selectors; two jumbotron background colors are also set imperatively in JS (search for `dark-mode` in the file). Any new themed element needs both a default rule and a `body.dark-mode` override.
