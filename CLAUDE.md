@@ -67,6 +67,14 @@ State lives in: `current_step_number`, `steps` (active question array), `respons
 | `ExamineYourThoughts.pdf` | Static downloadable PDF of the worksheet — committed once and not regenerated from source; update by hand if worksheet content changes meaningfully |
 | `CNAME` | GitHub Pages custom domain config |
 
+### How to Add a Question to the Long Set
+
+1. **`longListOfQuestions.js`** (required) — Add a question object to `long_list_of_questions` at the desired position. Use a unique `id`. Leave `response_handler` empty for a normal question. Set `result_tag` to `""` to hide it from the results table.
+2. **`worksheet.html`** (required, manual) — This file has question text hardcoded in HTML. Hand-add a matching `<li class="q">…</li>` block. `generatedWorksheet.html` does NOT need editing (it reads the JS directly).
+3. **`index.html`** (only if the question needs special behavior) — Add a new handler function and reference it in `response_handler`, or extend `prep_string()` if introducing a new placeholder token.
+4. **`ExamineYourThoughts.pdf`** (optional) — Update the static PDF by hand if the worksheet content change is significant.
+5. **`index.html` short set** (~line 217, optional) — Only if the question should also appear in the short set.
+
 ### Important Constraints
 
 - `worksheet.html` is intentionally standalone with no JS dependencies — it has its own copy of question text hardcoded in HTML
