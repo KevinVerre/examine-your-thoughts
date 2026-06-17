@@ -84,6 +84,14 @@ const long_list_of_questions =
 		"result_tag": "Without"
 	},
 	{
+		"id": "miracle",
+		"prompt": "If you could have an unlimited number of wishes and miracles, what would you wish for to improve this situation?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Miracle"
+	},
+	{
 		"id":"evidencefor",
 		"prompt":"What is the evidence FOR your negative thought?",
 		"hint":"",
