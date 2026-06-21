@@ -132,6 +132,14 @@ const long_list_of_questions =
 		"result_tag": "Kind of Person"
 	},
 	{
+		"id": "future_imagine",
+		"prompt": "Imagine it is ten years in the future and you are looking back to right now. What does your future self wish you had done right now?",
+		"hint": "",
+		"response": "",
+		"response_handler": "",
+		"result_tag": "Future",
+	},
+	{
 		"id": "child",
 		"prompt": "Imagine you had a child in this exact same situation, what would you want them to do with regards to this situation?",
 		"hint": "What advice would you give a child? How would you comfort them? Does that advice apply to you too?",
@@ -593,14 +601,6 @@ const long_list_of_questions =
 		"response": "",
 		"response_handler": "",
 		"result_tag": "Best Advice",
-	},
-	{
-		"id": "future_imagine",
-		"prompt": "Imagine it is ten years in the future and you are looking back to right now. What does your future self wish you had done right now?",
-		"hint": "",
-		"response": "",
-		"response_handler": "",
-		"result_tag": "Future",
 	},
 	{
 		"id": "best_question",
